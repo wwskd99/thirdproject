@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block
+	th:replace="~{./fragments/header::setContent(~{this::content})}">
+	<th:block th:fragment="content">
+
+	</th:block>
+</th:block>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+.container {
+	clear: both;
+	display: block;
+}
+
+.videoplayer {
+	width: 100%;
+	text-align: center;
+}
+
+.main {
+	background: black;
+	padding-top: 100px;
+	display: block;
+	overflow: auto;
+}
+</style>
+</head>
+<div class="main">
+	<div id="container" class="container">
+		<video class="videoplayer" autoplay playsinline>
+			<source
+				src="https://image.sony.co.kr/newStore/video/220719_Linkbuds_39sec.mp4"
+				type="video/mp4">
+		</video>
+	</div>
+</div>
+
+<th:block
+	th:replace="~{./fragments/footer::setContent(~{this::content})}">
+	<th:block th:fragment="content">
+
+	</th:block>
+</th:block>
+</html>

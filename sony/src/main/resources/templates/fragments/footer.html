@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="setContent(content)">
+<head>
+<style type="text/css">
+
+.footer{
+	width: 100vw;
+	max-width: 177.78vh;
+	position: relative;
+	top : 100%;
+    width: 100%;
+  display : block;
+}
+
+.footerinner {
+  
+    text-align: center;
+    color: #bbb;
+    background-color: #000;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    padding-bottom: 0px;
+    width: 100%;
+    left: 0;
+
+}
+.footerlegar .ul .li{
+	float: left;
+    line-height: 1.5;
+	color: white;
+}
+
+.footersocialtitle {
+	background-color: #000;
+ 	margin-left: 0px;
+	margin-top: 0px;
+    font-size: 24px;
+}
+.footersociallink img {
+    width: 32px;
+    height: 32px;
+}
+
+.img {
+    max-width: 100%;
+    vertical-align: top;
+}
+
+</style>
+</head>
+<body>	
+
+
+	<footer class="footer">
+				<div class="footerinner">
+				
+				
+				
+				
+				
+				
+				
+				
+					<div class="footersocial">
+						<h3 class="footersocialtitle">FOLLOW US</h3>
+							<div class="footersociallink">
+								<a href="https://www.facebook.com/sonykorea" target="_blank" class="footersociallink">
+								<img src="../images/facebook.PNG" alt="facebook">
+								</a>
+								<a href="https://www.instagram.com/sonykorea" target="_blank" class="footersociallink">
+								<img src="../images/insta.PNG" alt="instagram">
+								</a>
+								<a href="https://www.youtube.com/user/sonystyleblog" target="_blank" class="footersociallink">
+								<img src="../images/youtube.PNG" alt="youtube">
+								</a>
+							</div>
+					</div>
+					<div class="footerlegar">
+						<ul>
+							<li>이용약관</li>
+							<li>개인정보 처리방침</li>
+							<li>소비자 피해 보상보험</li>
+							<li>사이트맵</li>
+						</ul>
+					</div>
+					<div class="footerwarning">
+						<p>본 사이트의 컨텐츠는 저작권법의 보호를 받는 바, 상업적 목적의 무단전재, 복사, 배포 등을 금합니다.</p>
+						<p>소비자피해보상보험 고객님은 안전거래를 위해 현금 등으로 결제 시 저희 쇼핑몰에서 가입한 구매안전서비스를 이용하실 수 있습니다</p>
+					</div>
+					<address class="address">
+						<span>사업장주소 : 서울특별시 영등포구 국제금융로 10 원아이에프씨 24F</span>
+						<span>사업자 등록번호 : 106-81-23810 통신판매번호 2012-서울영등포-1038 소니코리아㈜</span>
+						<span>대표이사 : Okura Kikuo</span>
+						<span>개인정보관리책임자 : Okura Kikuo</span>
+						<span>TEL : 소니코리아 고객센터 1588-0911E</span>
+						<span>E-MAIL : cshelp@sony.co.kr</span>
+						<span>Copyright © Sony Korea Corporation. All rights reserved.</span>
+					</address>
+				</div>
+			</footer>
+</body>
+</th:block>
+</html>
