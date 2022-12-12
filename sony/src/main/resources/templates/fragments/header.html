@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="setContent(content)">
+<head>
+<style type="text/css">
+
+
+#wrap{
+position : relative;
+margin-bottom : 20%;
+	overflow : auto;
+}
+main{
+background : white;
+padding-top : 100px;
+
+  display : block;
+   overflow : auto;
+  
+}
+
+
+
+body{
+
+font-family: "SSTPro","Noto Sans KR",-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+margin : 0px;
+display: block;
+  width: 100vw;
+ max-width: 177.78vh;
+
+ overflow : auto;
+
+  background: black;
+  margin: 0 auto;
+  text-align : center;
+}
+
+
+
+.parent {
+
+	z-index : 200;
+	height: 100px;
+	width: 100vw;
+	 max-width: 177.78vh;
+	position: fixed;
+	background-color: black;
+	color: white;
+	justify-content: center;
+	align-items: center;
+	white-space: nowrap;
+}
+
+.logo {
+	flex: 1;
+	width : 7%;
+	height : 100px;
+	margin-right : 15%;
+	
+	float : left;
+}
+
+
+.menu {
+font-weight: 700;
+font-size : 20px;
+	float : left;
+	width : 65%;
+	height : 100px;
+
+}
+
+.menu ul {
+
+	height: 100px;
+	list-style: none;
+	margin: 0;
+	margin-left : 20px;
+	padding: 0;
+	
+}
+
+.menu li {
+	float : left;
+	padding: 0;
+	margin-left : 10%;
+	margin-right : 10%;
+	text-align : center;
+	
+}
+
+.menu li a {
+
+	display: block;
+	line-height: 100px;
+	margin: 0px;
+	padding: 0px 25px;
+	text-align: center;
+	text-decoration: none;
+	color: white;
+}
+
+.menu li a:hover {
+	color: #5865f5;
+	text-decoration: none;
+}
+
+.menu li ul {
+	color: white;
+	background: gray;
+	display: none;
+	height: auto;
+	border: 0px;
+	position: absolute;
+	width: 200px;
+	z-index: 200;
+}
+
+.menu li:hover ul {
+	display: block
+}
+
+.menu li li {
+	background: gray;
+	display: block;
+	float: none;
+	margin: 0px;
+	padding: 0px;
+	width: 200px;
+}
+
+.menu li:hover li a {
+	background: none;
+}
+
+.menu li ul a {
+	display: block;
+	height: 80px;
+	margin: 0px;
+	padding: 0px 10px 0px 15px;
+	text-align: left;
+}
+
+.menu li ul a:hover, .menu li ul li:hover a {
+	border: 0px;
+	color: #5865f5;;
+	text-decoration: none;
+}
+
+.menu p {
+	clear: left;
+}
+
+.usermenu {
+	float : right;
+	width : 10%;
+	height : 90px;
+	padding-top : 10px;
+
+	
+}
+
+.usermenu img {
+	width: 70px;
+	height: 70px;
+
+	
+}
+
+
+
+div.logo img {
+	width: 100px; /* 이미지 너비(가로) */
+	height: 100px; /* 이미지 높이(세로) */
+}
+
+a {
+	text-decoration: none; /* 링크 밑줄 없애기 */
+	color: black; /* 글 색상 */
+}
+
+#menu_right{
+width : 70px;
+height : 100px;
+float : left;
+position : relative;
+}
+
+#search_img {
+width : 30px;
+height : 30px;
+margin-top : 20px;
+
+}
+</style>
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+$(function () {
+    var lastScrollTop = 0,
+        delta = 15;
+    $(window).scroll(function (event) {
+        var st = $(this).scrollTop();
+        if (Math.abs(lastScrollTop - st) <= delta) return;
+        if ((st > lastScrollTop) && (lastScrollTop > 0)) {
+            $(".parent").css("top", "-100px");
+        } else {
+            $(".parent").css("top", "0px");
+        }
+        lastScrollTop = st;
+    });
+});
+</script>
+</head>
+<body>
+	<header>
+		<div class="parent">
+			<div class='logo'>
+				<a href="../common/main.do"> <img src="../images/sony.svg" />
+				</a>
+			</div>
+			<div class='menu'>
+				<ul>
+					<li><a>제품</a>
+						<ul>
+							<li><a
+								href="../product/cus_productlist.do?sort=3&category=101">카메라</a></li>
+
+							<li><a
+								href="../product/cus_productlist.do?sort=3&category=102">비디오
+									카메라</a></li>
+
+							<li><a
+								href="../product/cus_productlist.do?sort=3&category=103">오디오</a></li>
+
+							<li><a
+								href="../product/cus_productlist.do?sort=3&category=104">액세서리</a></li>
+						</ul></li>
+					<li><a href="#">멤버십</a>
+						<ul>
+							<li><a href="#">등급&혜택 안내</a></li>
+						</ul></li>
+
+					<li><a href="../notice/list.do">공지 사항</a></li>
+				</ul>
+			</div>
+			<div class='usermenu'>
+				<div id = "menu_right"> <a href="../product/popsearch.do"> <img id = "search_img"
+						src="../images/search.svg" /></a></div>
+				<div id = "menu_right"> <a href="../member/login.do"> <img
+						src="../images/mypage.png" /></a></div>
+				<div id = "menu_right">  <a href="../product/cartsession.do"> <img
+						src="../images/cart.png" /></a></div>
+			</div>
+		</div>
+	</header>
+</body>
+</th:block>
+</html>
