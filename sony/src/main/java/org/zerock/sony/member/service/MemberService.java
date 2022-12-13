@@ -5,6 +5,7 @@ import org.zerock.sony.member.entity.Member;
 
 public interface MemberService {
 	void register(MemberDTO dto);
+	MemberDTO memberLogin(String userid, String pwd);
 	
 	// DTO -> Entity
     default Member dtoToEntity(MemberDTO dto){
