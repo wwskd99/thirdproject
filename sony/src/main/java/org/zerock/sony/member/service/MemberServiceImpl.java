@@ -21,4 +21,19 @@ public class MemberServiceImpl implements MemberService {
         repository.save(member);
 	}
 
+	@Override
+	public MemberDTO memberLogin(String userid, String pwd) {
+		Member member = repository.findByUserid(userid);
+		if(member == null) {
+			return null;
+		} else {
+			MemberDTO memberDTO = entityToDTO(member);
+			if(memberDTO.getPwd().equals(pwd)) {
+				return memberDTO;
+			} else {
+				return null;
+			}
+		}
+	}
+
 }
