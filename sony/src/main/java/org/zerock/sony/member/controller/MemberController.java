@@ -35,6 +35,7 @@ public class MemberController {
 		} else {
 			HttpSession session = req.getSession();
 			session.setAttribute("loginUser", member);
+			log.info(member);
 			return "redirect:/main/home";
 		}
 	}
@@ -56,6 +57,11 @@ public class MemberController {
 	
 	@GetMapping("/findpwd")
 	public void findpwd() {
+		
+	}
+	
+	@GetMapping("/loginPage")
+	public void loginPage() {
 		
 	}
 }
