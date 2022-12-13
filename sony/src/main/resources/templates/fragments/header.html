@@ -246,14 +246,27 @@ $(function () {
 				</ul>
 			</div>
 			<div class='usermenu'>
-				<div id = "menu_right"> <a href="../product/popsearch"> <img id = "search_img"
-						src="../images/search.svg" /></a></div>
-				<div id = "menu_right"> <a href="../member/login"> <img
-						src="../images/mypage.png" /></a></div>
-				<div id = "menu_right">  <a href="../product/cartsession"> <img
-						src="../images/cart.png" /></a></div>
+				<div id = "menu_right"> 
+					<a href="../product/popsearch"> 
+						<img id = "search_img" src="../images/search.svg" />
+					</a>
+				</div>
+				<div id = "menu_right"> 
+					<a th:if="${session.loginUser == null}" href="../member/login"> 
+						<img src="../images/mypage.png" />
+					</a>
+					<a th:if="${session.loginUser != null}" href="../member/loginPage"> 
+						<img src="../images/mypage.png" />
+					</a>
+				</div>
+				<div id = "menu_right">  
+					<a href="../product/cartsession">
+						<img src="../images/cart.png" />
+					</a>
+				</div>
 			</div>
 		</div>
+
 	</header>
 </body>
 </th:block>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원 전용 페이지</title>
+<style type="text/css">
+button {
+	margin: 20px;
+	outline: none;
+}
+
+.custom {
+	width: min_content;
+	height: 40px;
+	padding: 10px 25px;
+	border: 2px solid #000;
+	font-family: 'Lato', sans-serif;
+	font-weight: 500;
+	background: transparent;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	position: relative;
+	display: inline-block;
+}
+
+.btn {
+	transition: all 0.3s ease;
+	overflow: hidden;
+}
+
+.btn:after {
+	position: absolute;
+	content: " ";
+	top: 0;
+	left: 0;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	transition: all 0.3s ease;
+	-webkit-transform: scale(.1);
+	transform: scale(.1);
+}
+
+.btn:hover {
+	color: white;
+	background: black;
+}
+
+.btn:hover:after {
+	background: #000;
+	-webkit-transform: scale(1);
+	transform: scale(1);
+}
+
+#search1{
+
+	width: 300px;
+	height: 50px;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom : 3px solid black;
+}
+
+#button1{
+	width: 80px;
+	height: 40px;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom : 3px solid black;
+}
+
+#frame {
+width : 100%;
+height : 50%;
+}
+
+#search {
+width : 100%;
+height : 20%;
+
+}
+</style>
+</head>
+<main>
+	<div id="wrap" align="center">
+		<div th:if="${session.loginUser.grade == 0}">
+				<!-- 관리자일 때 -->
+				<h2>관리자 전용 페이지</h2>
+				<form action="logout">
+					<table>
+						<tr>
+							<td>안녕하세요. [[${session.loginUser.name}]]([[${session.loginUser.userid}]])님</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center">
+								<div class="frame">
+									<input type="submit" class="custom btn" value="로그아웃"> <input
+										type="button" class="custom btn" value="회원정보변경"
+										onclick="location.href='/member/update?userid=${loginUser.userid}'"> <input
+										type="button" class="custom btn" value="검색어"
+										onclick="location.href='/product/popsearch'">
+									<!-- 인기 검색어 -->
+									<input type="button" class="custom btn" value="게시글 리스트"
+										onclick="location.href='/notice/list'"> <input
+										type="button" class="custom btn" value="상품리스트"
+										onclick="location.href='/product/list'"> <input
+										type="button" class="custom btn" value="유저카트정보 조회"
+										onclick="location.href='/product/paymentlist'"> <input
+										type="button" class="custom btn" value="권한 부여"
+										onclick="location.href='/member/grant'">
+								</div>
+							</td>
+
+						</tr>
+					</table>
+				</form>
+			</div>
+  			<div th:if="${session.loginUser.grade == 1}">
+				<h2>회원 전용 페이지</h2>
+				<form action="logout">
+					<table>
+						<tr>
+							<td>안녕하세요. [[${session.loginUser.name}]]([[${session.loginUser.userid}]])님</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center">
+								<div id="frame">
+									<input type="submit" class="custom btn" value="로그아웃"> <input
+										type="button" class="custom btn" value="회원정보변경"
+										onclick="location.href='/member/update?userid=${loginUser.userid}'"> <input
+										type="button" class="custom btn" value="검색어"
+										onclick="location.href='/product/popsearch'">
+									<!-- 인기 검색어 -->
+									<input type="button" class="custom btn" value="게시글 리스트"
+										onclick="location.href='/notice/list'"> <input
+										type="button" class="custom btn" value="상품리스트"
+										onclick="location.href='/product/cus_productlist'"> <input
+										type="button" class="custom btn" value="배송 준비 리스트"
+										onclick="location.href='/member/buylist'">
+								</div>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		<div id="search">
+			<form method="get" action="../product/search.do" name="frm">
+				<table style="text-align: right">
+					<tr>
+						<td><input id="search1" type="search" class="form-control"
+							placeholder="검색어 입력(특수문자 제외)" name="search" maxlength="100"></td>
+						<td>
+<!--						<button id="button1" type="submit" class="btn-success"
+								onclick="return keywordCheck()">검색</button>
+-->
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
+</main>
+</body>
+</html>
