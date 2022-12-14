@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="setContent(content)">
+	<head>
+<style type="text/css">
+#wrap {
+	position: relative;
+	margin-bottom: 20%;
+	overflow: auto;
+}
+
+main {
+	background: white;
+	padding-top: 100px;
+	display: block;
+	overflow: auto;
+}
+
+body {
+	font-family: "SSTPro", "Noto Sans KR", -apple-system, BlinkMacSystemFont,
+		"Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif,
+		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+	margin: 0px;
+	display: block;
+	width: 100vw;
+	max-width: 177.78vh;
+	overflow: auto;
+	background: black;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.parent {
+	z-index: 200;
+	height: 100px;
+	width: 100vw;
+	max-width: 177.78vh;
+	position: fixed;
+	background-color: black;
+	color: white;
+	justify-content: center;
+	align-items: center;
+	white-space: nowrap;
+}
+
+.logo {
+	flex: 1;
+	width: 7%;
+	height: 100px;
+	margin-right: 15%;
+	float: left;
+}
+
+.menu {
+	font-weight: 700;
+	font-size: 20px;
+	float: left;
+	width: 65%;
+	height: 100px;
+}
+
+.menu ul {
+	height: 100px;
+	list-style: none;
+	margin: 0;
+	margin-left: 20px;
+	padding: 0;
+}
+
+.menu li {
+	float: left;
+	padding: 0;
+	margin-left: 10%;
+	margin-right: 10%;
+	text-align: center;
+}
+
+.menu li a {
+	display: block;
+	line-height: 100px;
+	margin: 0px;
+	padding: 0px 25px;
+	text-align: center;
+	text-decoration: none;
+	color: white;
+}
+
+.menu li a:hover {
+	color: #5865f5;
+	text-decoration: none;
+}
+
+.menu li ul {
+	color: white;
+	background: gray;
+	display: none;
+	height: auto;
+	border: 0px;
+	position: absolute;
+	width: 200px;
+	z-index: 200;
+}
+
+.menu li:hover ul {
+	display: block
+}
+
+.menu li li {
+	background: gray;
+	display: block;
+	float: none;
+	margin: 0px;
+	padding: 0px;
+	width: 200px;
+}
+
+.menu li:hover li a {
+	background: none;
+}
+
+.menu li ul a {
+	display: block;
+	height: 80px;
+	margin: 0px;
+	padding: 0px 10px 0px 15px;
+	text-align: left;
+}
+
+.menu li ul a:hover, .menu li ul li:hover a {
+	border: 0px;
+	color: #5865f5;;
+	text-decoration: none;
+}
+
+.menu p {
+	clear: left;
+}
+
+.usermenu {
+	float: right;
+	width: 10%;
+	height: 90px;
+	padding-top: 10px;
+}
+
+.usermenu img {
+	width: 60px;
+	height: 60px;
+}
+
+div.logo img {
+	width: 100px; /* 이미지 너비(가로) */
+	height: 100px; /* 이미지 높이(세로) */
+}
+
+a {
+	text-decoration: none; /* 링크 밑줄 없애기 */
+	color: black; /* 글 색상 */
+}
+
+#menu_right {
+	width: 70px;
+	height: 100px;
+	float: left;
+	position: relative;
+}
+
+#search_img {
+	width: 30px;
+	height: 30px;
+	margin-top: 20px;
+}
+
+.btn_mo_search {
+	display: block;
+	position: absolute;
+	margin: 0;
+}
+
+#modal.search {
+	display: none;
+	position: absolute;
+	z-index: 121;
+	right: 0;
+	top: 0;
+	width: 100%;
+	padding: 85px 0;
+	font-weight: 500;
+	background-color: #000;
+}
+
+button {
+	cursor: pointer;
+	font-size: inherit;
+	border-radius: 0;
+	background: none;
+}
+
+.search_inner {
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.search_field {
+	position: relative;
+	max-width: 590px;
+	margin-bottom: 80px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 24px 0 21px;
+	border-bottom: 3px solid #fff;
+}
+
+fieldset {
+	border: 0;
+}
+
+legend {
+	position: absolute;
+	left: -9999px;
+	display: block;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	text-indent: -9999px;
+	clip: rect(0, 0, 0, 0);
+}
+
+form {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	vertical-align: baseline;
+	font-family: inherit;
+	-webkit-font-smoothing: antialiased;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.search_input {
+	width: 500px;
+	font-weight: inherit;
+	font-size: 24px;
+	letter-spacing: -.025em;
+	margin-left: -95px;
+	color: #fff;
+	border: 0;
+	outline: 0;
+	background-color: transparent;
+}
+
+.btn_search_submit {
+	position: absolute;
+	top: 50%;
+	right: 0;
+	transform: translateY(-50%);
+	display: block;
+	color: #fff;
+}
+
+a {
+	text-decoration: none;
+	display: block;
+	color: #fff;
+}
+
+.search_keyword {
+	margin-bottom: 70px;
+}
+
+.search_title {
+	margin-bottom: 24px;
+	font-size: 20px;
+	letter-spacing: -.025em;
+	color: #fff;
+	text-align: left;
+}
+
+.keyword_item_list {
+	width: 100%;
+	height: 30%;
+}
+
+.keyword_item {
+	float: left;
+	margin: 0 32px 8px 0;
+	font-size: 16px;
+	line-height: 1.5;
+	letter-spacing: -.025em;
+	color: #888;
+}
+
+.search_recomm {
+	margin-left: auto;
+}
+
+.recomm_title {
+	margin-bottom: 24px;
+	font-size: 20px;
+	letter-spacing: -.025em;
+	color: #fff;
+	text-align: left;
+}
+
+.recomm_item_list {
+	display: flex;
+	justify-content: space-between;
+	width: 812px;
+}
+
+ul {
+	list-style: none;
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+	margin-inline-start: 0px;
+	margin-inline-end: 0px;
+	padding-inline-start: 40px;
+}
+
+li {
+	display: list-item;
+	text-align: -webkit-match-parent;
+}
+
+.recomm_item {
+	flex: 0 1 260px;
+}
+
+.serach_recomm_pic {
+	position: relative;
+	text-align: center;
+	background-color: #fff;
+}
+
+.search_recomm_pic img {
+	width: 146px;
+	height: 146px;
+}
+
+.badge_text {
+	left: 24px;
+	top: 24px;
+	font-weight: 700;
+	font-size: 18px;
+	line-height: 1.5;
+	letter-spacing: 0;
+}
+
+.search_btn_close {
+	position: absolute;
+	top: 20px;
+	right: 24px;
+	animation-name: fadeOut;
+}
+</style>
+
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+$(function () {
+    var lastScrollTop = 0,
+        delta = 15;
+    $(window).scroll(function (event) {
+        var st = $(this).scrollTop();
+        if (Math.abs(lastScrollTop - st) <= delta) return;
+        if ((st > lastScrollTop) && (lastScrollTop > 0)) {
+            $(".parent").css("top", "-100px");
+        } else {
+            $(".parent").css("top", "0px");
+        }
+        lastScrollTop = st;
+    });
+});
+
+</script>
+	</head>
+	<body>
+		<header>
+			<div class="parent">
+				<div class='logo'>
+					<a href="../main/home"> <img src="../images/sony.svg" />
+					</a>
+				</div>
+				<div class='menu'>
+					<ul>
+						<li><a>제품</a>
+							<ul>
+								<li><a
+									href="../product/cus_productlist.do?sort=3&category=101">카메라</a></li>
+
+								<li><a
+									href="../product/cus_productlist.do?sort=3&category=102">비디오
+										카메라</a></li>
+
+								<li><a
+									href="../product/cus_productlist.do?sort=3&category=103">오디오</a></li>
+
+								<li><a
+									href="../product/cus_productlist.do?sort=3&category=104">액세서리</a></li>
+							</ul></li>
+						<li><a href="#">멤버십</a>
+							<ul>
+								<li><a href="#">등급&혜택 안내</a></li>
+							</ul></li>
+
+						<li><a href="../notice/list">공지 사항</a></li>
+					</ul>
+				</div>
+				<div class='usermenu'>
+					<button id="btn_mo_search">
+						<img src="../images/search.png" alt="검색창 열기">
+					</button>
+
+					<!-- 모달 -->
+					<div id="modal" class="search">
+						<div class="search_inner">
+							<div class="search_field">
+								<form method="get" action="../products/search">
+
+									<fieldset>
+										<legend>검색</legend>
+										<input class="search_input" type="text"
+											placeholder="검색어 입력(특수문자 제외)" title="검색어 입력" maxlength="50"
+											value>
+
+										<button class="btn_search_submit" type="submit">
+											<img src="../images/search.png" alt="">
+										</button>
+
+									</fieldset>
+								</form>
+							</div>
+							<div class="search_keyword">
+								<div>
+									<h3 class="search_title">인기검색어</h3>
+								</div>
+								<div class="keyword_item_list">
+									<a class="keyword_item" href="poducts-view/.."
+										style="color: white"># 물건1</a> <a class="keyword_item"
+										href="poducts-view/.." style="color: white"># 물건2</a> <a
+										class="keyword_item" href="poducts-view/.."
+										style="color: white"># 물건3</a>
+								</div>
+							</div>
+
+							<div class="search_recomm">
+								<div>
+									<h3 class="recomm_title">추천 제품</h3>
+								</div>
+								<div class="recomm_wrapper">
+									<ul class="recomm_item_list">
+										<li class="reomm_item"><a href="products-view/..">
+												<div class="search_recomm_pic">
+													<img src=""> <span class="badge_text"
+														style="color: rgb(255, 78, 0);">NEW</span>
+												</div>
+												<div class="search_recomm_wrapper">
+													<span class="recomm_name">카메라1</span>
+													<p class="recomm_desc">카메라1 설명</p>
+												</div>
+										</a></li>
+										<li class="reomm_item"><a href="products-view/..">
+												<div class="search_recomm_pic">
+													<img src=""> <span class="badge_text"
+														style="color: rgb(255, 78, 0);">NEW</span>
+												</div>
+												<div class="search_recomm_wrapper">
+													<span class="recomm_name">카메라2</span>
+													<p class="recomm_desc">카메라1 설명</p>
+												</div>
+										</a></li>
+										<li class="reomm_item"><a href="products-view/..">
+												<div class="search_recomm_pic">
+													<img src=""> <span class="badge_text"
+														style="color: rgb(255, 78, 0);">event</span>
+												</div>
+												<div class="search_recomm_wrapper">
+													<span class="recomm_name">카메라3</span>
+													<p class="recomm_desc">카메라1 설명</p>
+												</div>
+										</a></li>
+									</ul>
+								</div>
+							</div>
+							<button class="search_btn_close">
+								<img src="" alt="검색창 닫기">
+							</button>
+						</div>
+					</div>
+					<!--  -->
+					<script type="text/javascript">				
+				const modal = document.getElementById("modal")
+				
+				const btnMoSearch = document.getElementById("btn_mo_search")
+				btnMoSearch.addEventListener("click", e => {
+				    modal.style.display = "flex"
+				})
+				const closeBtn = modal.querySelector(".search_btn_close")
+				closeBtn.addEventListener("click", e => {
+				    modal.style.display = "none"
+				})
+				
+				$(function(){
+						$("btn_mo_search").on("click", function(){
+						$("modal").fadeIn(1000);
+					});
+						$("search_btn_close").on("click", function(){
+						$("modal").fadeOut(1000);
+					});
+				});
+				
+				var searchForm = $("searchForm");
+				
+				$('.btn_search_submit').click(function(){
+					 if(keyword == null || keyword.length == 0) {
+					alert("키워드를 입력하세요");
+					return;
+					 }
+					 searchForm.submit();
+				});
+			</script>
+					<div id="menu_right">
+						<a href="../member/login"> <img src="../images/mypage.png" /></a>
+					</div>
+					<div id="menu_right">
+						<a href="../product/cartsession"> <img
+							src="../images/cart.png" /></a>
+					</div>
+				</div>
+			</div>
+		</header>
+	</body>
+</th:block>
+</html>
