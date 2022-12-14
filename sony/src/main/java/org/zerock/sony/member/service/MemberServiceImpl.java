@@ -1,5 +1,7 @@
 package org.zerock.sony.member.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.zerock.sony.member.dto.MemberDTO;
 import org.zerock.sony.member.entity.Member;
@@ -23,11 +25,14 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberDTO memberLogin(String userid, String pwd) {
-		Member member = repository.findByUserid(userid);
-		if(member == null) {
+		log.info(userid);
+		Optional<Member> result = repository.findByUserid(userid,false);
+		log.info(result);
+		if(result == null) {
 			return null;
 		} else {
-			MemberDTO memberDTO = entityToDTO(member);
+			MemberDTO memberDTO = entityToDTO(result.get());
+			log.info(memberDTO);
 			if(memberDTO.getPwd().equals(pwd)) {
 				return memberDTO;
 			} else {

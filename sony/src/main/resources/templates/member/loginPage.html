@@ -85,13 +85,13 @@ height : 20%;
 </head>
 <main>
 	<div id="wrap" align="center">
-		<div th:if="${session.loginUser.grade == 0}">
+		<div th:if="${member.grade==0}">
 				<!-- 관리자일 때 -->
 				<h2>관리자 전용 페이지</h2>
 				<form action="logout">
 					<table>
 						<tr>
-							<td>안녕하세요. [[${session.loginUser.name}]]([[${session.loginUser.userid}]])님</td>
+							<td>안녕하세요. [[${member}]]님</td>
 						</tr>
 						<tr>
 							<td colspan="2" align="center">
@@ -117,12 +117,12 @@ height : 20%;
 					</table>
 				</form>
 			</div>
-  			<div th:if="${session.loginUser.grade == 1}">
+  			<div th:if="${member.grade==1}">
 				<h2>회원 전용 페이지</h2>
 				<form action="logout">
 					<table>
 						<tr>
-							<td>안녕하세요. [[${session.loginUser.name}]]([[${session.loginUser.userid}]])님</td>
+							<td>안녕하세요. [[${member}]]</td>
 						</tr>
 						<tr>
 							<td colspan="2" align="center">

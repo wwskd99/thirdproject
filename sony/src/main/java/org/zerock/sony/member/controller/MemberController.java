@@ -1,15 +1,15 @@
 package org.zerock.sony.member.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.sony.member.dto.MemberDTO;
 import org.zerock.sony.member.service.MemberService;
+import org.zerock.sony.security.dto.AuthMemberDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -20,24 +20,10 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class MemberController {
 	private final MemberService MService;
-	
+    
 	@GetMapping("/login")
-	public void login() {
-		
-	}
-	
-	@PostMapping("/login")
-	public String loginMember(MemberDTO dto, RedirectAttributes rttr, HttpServletRequest req) {
-		MemberDTO member = MService.memberLogin(dto.getUserid(), dto.getPwd());
-		if(member == null) {
-			rttr.addFlashAttribute("message", "fail");
-			return "redirect:/member/login";
-		} else {
-			HttpSession session = req.getSession();
-			session.setAttribute("loginUser", member);
-			log.info(member);
-			return "redirect:/main/home";
-		}
+	public void login(){
+
 	}
 	
 	@GetMapping("/join")
@@ -61,7 +47,13 @@ public class MemberController {
 	}
 	
 	@GetMapping("/loginPage")
-	public void loginPage() {
+	public void loginPage(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, Model model) {
+		log.info(authmemberDTO);
+		 model.addAttribute("member", authmemberDTO);
+	}
+	
+	@GetMapping("/modify")
+	public void modify() {
 		
 	}
 }

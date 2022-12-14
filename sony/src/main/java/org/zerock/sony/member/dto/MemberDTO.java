@@ -22,4 +22,5 @@ public class MemberDTO {
 	private int grade;
 	private int gender;// integer(1)
 	private int mile;
+	private boolean fromSocial;
 }
