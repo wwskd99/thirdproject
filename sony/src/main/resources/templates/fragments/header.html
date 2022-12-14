@@ -252,7 +252,7 @@ $(function () {
 					</a>
 				</div>
 				<div id = "menu_right"> 
-					<div sec:authorize!="isAuthenticated()">
+					<div sec:authorize="isAnonymous()">
 						<a href="../member/login"> 
 							<img src="../images/mypage.png" />
 						</a>

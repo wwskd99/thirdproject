@@ -88,7 +88,7 @@ height : 20%;
 		<div th:if="${member.grade==0}">
 				<!-- 관리자일 때 -->
 				<h2>관리자 전용 페이지</h2>
-				<form action="logout">
+				<form action="../logout">
 					<table>
 						<tr>
 							<td>안녕하세요. [[${member}]]님</td>
@@ -119,7 +119,7 @@ height : 20%;
 			</div>
   			<div th:if="${member.grade==1}">
 				<h2>회원 전용 페이지</h2>
-				<form action="logout">
+				<form action="../logout">
 					<table>
 						<tr>
 							<td>안녕하세요. [[${member}]]</td>
