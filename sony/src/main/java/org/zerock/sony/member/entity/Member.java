@@ -31,5 +31,13 @@ public class Member {
 	private int grade;
 	private int gender;// integer(1)
 	private int mile;
+	private boolean fromSocial;
+	
+	@ElementCollection(fetch = FetchType.LAZY)
+    @Builder.Default
+    private Set<MemberRole> roleSet = new HashSet<>();
 
+    public void addMemberRole(MemberRole MemberRole){
+        roleSet.add(MemberRole);
+    }
 }

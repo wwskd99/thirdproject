@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>회원정보 수정 폼</title>
+<style type="text/css">
+h1 {
+	width: 250px;
+	height: 150px;
+	font-weight: bold;
+	color: black; /* 글 색상 */
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0 auto;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+}
+
+input {
+	outline: none;
+	text-align: center;
+}
+
+input:focus {
+	outline: 4px double gray;
+	animation-name: border-focus;
+	animation-duration: 1s;
+	animation-fill-mode: forwards;
+}
+
+@keyframes border-focus {
+
+	from { 
+		border-radius:0px;
+	}
+
+	to {
+		border-radius: 15px;
+	}
+
+}
+.fill {
+	background: white;
+	border-radius: 3px;
+	border-collapse: collapse;
+	height: 320px;
+	margin: auto;
+	max-width: 600px;
+	padding: 5px;
+	width: 100%;
+	animation: float 5s infinite;
+}
+
+th {
+	color: #D5DDE5;;
+	background: #1b1e24;
+	border-bottom: 4px solid #9ea7af;
+	border-right: 1px solid #343a45;
+	font-size: 23px;
+	font-weight: 100;
+	padding: 24px;
+	text-align: left;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+	vertical-align: middle;
+}
+
+tr {
+	border-top: 1px solid #C1C3D1;
+	border-bottom: 1px solid #C1C3D1;
+	color: #666B85;
+	font-size: 16px;
+	font-weight: normal;
+	text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+}
+
+#input1 {
+	width: 60px;
+	height: 40px;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom : 3px solid black;
+}
+
+
+
+</style>
+<script type="text/javascript" src="../js/member.js"></script>
+</head>
+<body>
+	<main>
+		<div id="wrap" align="center">
+			<h1>회원 수정</h1>
+			<div class="container">
+				<form action="update.do" method="post" name="frm">
+					<table class="fill">
+						<tr>
+							<td>이 름</td>
+							<td><input type="text" name="name" size="20"
+								value="${mVo.name}" readonly></td>
+						</tr>
+						<tr>
+							<td>아이디</td>
+							<td><input type="text" name="userid" size="20"
+								value="${mVo.userid}" readonly></td>
+						</tr>
+						<tr>
+							<td>암 &nbsp; 호</td>
+							<td><input type="password" name="pwd" size="20">*</td>
+						</tr>
+						<tr height="30">
+							<td width="80">암호 확인</td>
+							<td><input type="password" name="pwd_check" size="20">*</td>
+						</tr>
+						<tr>
+							<td>이메일</td>
+							<td><input type="text" name="email" size="20"
+								value="${mVo.email}"></td>
+						</tr>
+						<tr>
+							<td>주 소</td>
+							<td><input type="text" name="address" size="20"
+								value="${mVo.address}"></td>
+						</tr>
+						<tr>
+							<td>전화번호</td>
+							<td><input type="text" name="phone" size="20"
+								value="${mVo.phone}"></td>
+						</tr>
+						<tr>
+							<td>성 별</td>
+							<td><c:choose>
+									<c:when test="${mVo.gender==1}">
+										<input type="radio" id=”male” name="gender" value="1"
+											checked="checked"> 남성
+							<input type="radio" id=”female” name="gender" value="2"> 여성
+					</c:when>
+									<c:otherwise>
+										<input type="radio" id=”male” name="gender" value="1"> 남성
+						<input type="radio" id=”female” name="gender" value="2"
+											checked="checked"> 여성
+					</c:otherwise>
+								</c:choose></td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center"><input id="input1" type="submit"
+								value="확인">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input id="input1" type="reset" value="취소">
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

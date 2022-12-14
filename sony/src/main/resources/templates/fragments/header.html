@@ -252,12 +252,16 @@ $(function () {
 					</a>
 				</div>
 				<div id = "menu_right"> 
-					<a th:if="${session.loginUser == null}" href="../member/login"> 
-						<img src="../images/mypage.png" />
-					</a>
-					<a th:if="${session.loginUser != null}" href="../member/loginPage"> 
-						<img src="../images/mypage.png" />
-					</a>
+					<div sec:authorize!="isAuthenticated()">
+						<a href="../member/login"> 
+							<img src="../images/mypage.png" />
+						</a>
+					</div>
+					<div sec:authorize="isAuthenticated()">
+						<a href="../member/loginPage"> 
+							<img src="../images/mypage.png" />
+						</a>
+					</div>
 				</div>
 				<div id = "menu_right">  
 					<a href="../product/cartsession">
