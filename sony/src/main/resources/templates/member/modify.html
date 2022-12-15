@@ -93,24 +93,36 @@ tr {
 
 
 </style>
-<script type="text/javascript" src="../js/member.js"></script>
 </head>
 <body>
 	<main>
 		<div id="wrap" align="center">
+		<div>
+						<h2>[[${msg}]]</h2>
+					</div>
 			<h1>회원 수정</h1>
 			<div class="container">
-				<form action="update.do" method="post" name="frm">
+				<form action="modify" method="post" name="frm">
+					<input type="hidden" name="grade" th:value="${member.grade}">
+					<input type="hidden" name="fromSocial" th:value="${member.fromSocial}">
 					<table class="fill">
 						<tr>
 							<td>이 름</td>
-							<td><input type="text" name="name" size="20"
-								value="${mVo.name}" readonly></td>
+							<td>
+								<div th:if="!${member.fromSocial}">
+									<input type="text" name="name" size="20" th:value="${member.name}" readonly>
+								</div>
+								<div th:if="${member.fromSocial}">
+									<input type="text" name="name" size="20" th:value="${member.name}">
+								</div>
+							</td>
 						</tr>
 						<tr>
+
 							<td>아이디</td>
-							<td><input type="text" name="userid" size="20"
-								value="${mVo.userid}" readonly></td>
+							<td>
+								<input type="text" name="userid" size="20" th:value="${member.userid}" readonly>
+							</td>
 						</tr>
 						<tr>
 							<td>암 &nbsp; 호</td>
@@ -122,33 +134,38 @@ tr {
 						</tr>
 						<tr>
 							<td>이메일</td>
-							<td><input type="text" name="email" size="20"
-								value="${mVo.email}"></td>
+							<td>
+								<div th:if="!${member.fromSocial}">
+									<input type="text" name="email" size="20" th:value="${member.email}">
+								</div>
+								<div th:if="${member.fromSocial}">
+									<input type="text" name="email" size="20" th:value="${member.email}" readonly>
+								</div>
+							</td>
 						</tr>
 						<tr>
 							<td>주 소</td>
 							<td><input type="text" name="address" size="20"
-								value="${mVo.address}"></td>
+								th:value="${member.address}"></td>
 						</tr>
 						<tr>
 							<td>전화번호</td>
 							<td><input type="text" name="phone" size="20"
-								value="${mVo.phone}"></td>
+								th:value="${member.phone}"></td>
 						</tr>
 						<tr>
 							<td>성 별</td>
-							<td><c:choose>
-									<c:when test="${mVo.gender==1}">
-										<input type="radio" id=”male” name="gender" value="1"
-											checked="checked"> 남성
-							<input type="radio" id=”female” name="gender" value="2"> 여성
-					</c:when>
-									<c:otherwise>
-										<input type="radio" id=”male” name="gender" value="1"> 남성
-						<input type="radio" id=”female” name="gender" value="2"
-											checked="checked"> 여성
-					</c:otherwise>
-								</c:choose></td>
+							<td>
+								<div th:if="${member.gender==0}">
+									<input type="radio" id="male" name="gender" value="0" checked="checked"> 남성
+									<input type="radio" id="female" name="gender" value="1"> 여성
+								</div>
+	
+								<div th:if="${member.gender==1}">
+									<input type="radio" id="male" name="gender" value="0"> 남성
+									<input type="radio" id="female" name="gender" value="1" checked="checked"> 여성
+								</div>
+							</td>
 						</tr>
 						<tr>
 							<td colspan="2" align="center"><input id="input1" type="submit"
@@ -156,6 +173,7 @@ tr {
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input id="input1" type="reset" value="취소">
 							</td>
 						</tr>
+						
 					</table>
 				</form>
 			</div>
