@@ -41,10 +41,9 @@
 
 .menu ul {
 	height: 100px;
-	list-style: none;
-	margin: 0;
-	margin-left: 20px;
-	padding: 0;
+	margin:0;
+    padding:0;
+    list-style:none;
 }
 
 .menu li {
@@ -472,21 +471,12 @@ $(function () {
 				
 				const btnMoSearch = document.getElementById("btn_mo_search")
 				btnMoSearch.addEventListener("click", e => {
-				    modal.style.display = "flex"
+					$("#modal.search").css('display','flex').hide().fadeIn();
 				})
 				const closeBtn = modal.querySelector(".search_btn_close")
 				closeBtn.addEventListener("click", e => {
-				    modal.style.display = "none"
+					$("#modal.search").css('display','flex').fadeOut();
 				})
-				
-				$(function(){
-						$("btn_mo_search").click(function(){
-						$("modal").fadeIn(5000);
-					});
-						$("search_btn_close").on("click", function(){
-						$("modal").fadeOut(5000);
-					});
-				});
 				
 				var searchForm = $("searchForm");
 				
@@ -509,9 +499,6 @@ $(function () {
 								<img src="../images/mypage.png" />
 							</a>
 						</div>
-					</div>
-					
-					<div id="menu_right">
 						<a href="../product/cartsession"> <img
 							src="../images/cart.png" /></a>
 					</div>
