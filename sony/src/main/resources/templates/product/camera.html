@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block
+	th:replace="~{./fragments/header::setContent(~{this::content})}">
+	<th:block th:fragment="content">
+
+	</th:block>
+</th:block>
+
+<head>
+<meta charset="UTF-8">
+<style>
+.wrapper { 
+	width: 100%;
+	min-width: 320px;
+	position: relative; 
+    max-width: 1920px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white; 
+ }
+ 
+.list_wrap {
+	width: 100%;
+	text-align: center;
+}
+</style>
+<title>상품 목록</title>
+</head>
+<body>
+	<div class="wrapper">
+		<div id="list_wrap">
+			<div id="list_top_wrap">
+				<img id="list_top_img" src="">
+				<script>
+					document.getElementById('list_top_img').src = topImg()
+				</script>
+				<div id=camera_text>
+					<span id="top_span"><script>
+						topSpan()
+					</script></span>
+				</div>
+
+				<div id="list_top_center_group">
+					<div id="camera_all">
+						<a id="link_all" href=""><img src="../images/icon_all.svg"><span>전체보기</span></a>
+						<script>
+							document.getElementById('link_all').href = allClick()
+						</script>
+					</div>
+					<div id="camera_ren">
+						<a id="category1" href=""> <script>
+							document.getElementById('category1').href = categoryOne()
+						</script> <img id="list_top_img2" src=""> <script>
+							document.getElementById('list_top_img2').src = topImgTwo()
+						</script> <span id="top_span2">렌즈교환식 카메라</span> <script>
+							topSpanTwo()
+						</script>
+						</a>
+
+					</div>
+					<div id="camera_com">
+						<a id="category2" href=""> <script>
+							document.getElementById('category2').href = categoryTwo()
+						</script> <img id="list_top_img3" src=""> <script>
+							document.getElementById('list_top_img3').src = topImgThree()
+						</script> <span id="top_span3">컴팩트 카메라</span> <script>
+							topSpanThree()
+						</script>
+						</a>
+					</div>
+				</div>
+			</div>
+			<div id="list_center_wrap">
+				<div id="list_center_top">
+					<div id="list_center_top_name">
+						<h1>제품</h1>
+					</div>
+					<div id="list_center_top_sort">
+						<button class="btn-sort" onClick="SortPriceHigh()">높은가격순</button>
+						<button class="btn-sort" onClick="SortPriceLow()">낮은가격순</button>
+						<button class="btn-sort" onClick="SortNew()">최신순</button>
+					</div>
+				</div>
+				<div id="product_body">
+					<div id="product_body_items">
+						<div id="product_body_pic">
+							<a href="cus_productview.do?code=${pro.code}"> <img
+								src="../${pro.pictureurl}" />
+							</a>
+						</div>
+						<div id="product_sul">
+							<a id="items1" href="cus_productview.do?code=${pro.code}"><strong>${pro.name}</strong></a>
+							<a id="items2" href="cus_productview.do?code=${pro.code}">${pro.description}</a>
+							<a id="items3" href="cus_productview.do?code=${pro.code}">${pro.price}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<th:block
+	th:replace="~{./fragments/footer::setContent(~{this::content})}">
+	<th:block th:fragment="content">
+
+	</th:block>
+</th:block>
+</html>

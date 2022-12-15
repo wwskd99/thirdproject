@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>accessory</title>
+</head>
+<body>
+<main>
+	<div id="cart_wrap" align="center">
+			<div id="cart_top_wrap">
+				<h1>장바구니</h1>
+				<div id="cart_top_icon">
+					<div id="cart_top_icon_id1">
+						<img src="../images/cart_icon1.svg"><span>장바구니</span>
+					</div>
+					<div id="cart_top_icon_id2">
+						<img src="../images/cart_icon2.svg"><span>주문·결제</span>
+					</div>
+					<div id="cart_top_icon_id3">
+						<img src="../images/cart_icon2.svg"><span>주문 완료</span>
+					</div>
+				</div>
+			</div>
+			<div id="cart_center_wrap">
+				<form method="get" name="db">
+					<div id="cart_center_top">
+						<div id="checkbox_div">
+							<input type="checkbox" class="all" id="cart_checkbox">
+						</div>
+						<div id="cart_center_button_div">
+							<input type="button" value="선택 삭제" onClick="deleteProduct()"
+								id="cart_delete">
+						</div>
+					</div>
+					<div id="cart_center_center">
+						<div id="cart_center_sul">
+							<div id="cart_center_sul_check"></div>
+							<div id="cart_center_sul_img"></div>
+							<div id="cart_center_sul_name">
+								<span>제품</span>
+							</div>
+							<div id="cart_center_sul_price">
+								<span>가격</span>
+							</div>
+							<div id="cart_center_sul_amount">
+								<span>수량</span>
+							</div>
+							<div id="cart_center_sul_sum">
+								<span>합계</span>
+							</div>
+						<div id="cart_center_sul_delete"></div>
+						</div>
+						<div id="cart_center_list">
+							<c:forEach var="ca" items="${cart}">
+								<div id="cart_center_list_check">
+									<input id="rowcheck_button" type="checkbox" name="rowCheck"
+										value="${ca.cart_id}">
+								</div>
+								<div id="cart_center_list_img">
+									<img id="cartline_img" src="../${ca.pictureurl}">
+								</div>
+								<div id="cart_center_list_name">
+									<span>${ca.name}</span>
+								</div>
+								<div id="cart_center_list_price">
+									<span>${ca.price} 원</span>
+								</div>
+								<div id="cart_center_list_amount">
+									<span>${ca.amount}</span>
+								</div>
+								<div id="cart_center_list_sum">
+								
+									<span>${ca.amount*ca.price} 원</span>
+								</div>
+								<div id="cart_center_list_delete">
+									<input id="delete_button" type="button" value="삭제"
+										onClick="location.href='cus_delete.do?rowCheck=${ca.cart_id}'">
+								</div>
+							</c:forEach>
+						</div>
+					</div>
+					<div id="cart_center_bottom">
+						<input id="buybutton" type="button" value="주문하기"
+							onClick="buyProduct()">
+					</div>
+				</form>
+			</div>
+		</div>
+	</main>
+</body>
+</html>
