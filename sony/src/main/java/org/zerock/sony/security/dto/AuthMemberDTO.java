@@ -14,6 +14,7 @@ import java.util.Map;
 @Setter
 @ToString
 public class AuthMemberDTO extends User implements OAuth2User {
+	private String userid;
     private String email;
     private String password;
     private String name;
@@ -21,15 +22,16 @@ public class AuthMemberDTO extends User implements OAuth2User {
     private Map<String, Object> attr;
     private int grade;
 
-    public AuthMemberDTO(String username, String password, boolean fromSocial, int grade,
+    public AuthMemberDTO(String userid, String username, String password, boolean fromSocial, int grade,
                              Collection<? extends GrantedAuthority> authorities, Map<String, Object> attr) {
-        this(username,password, fromSocial, grade, authorities);
+        this(userid, username,password, fromSocial, grade, authorities);
         this.attr = attr;
     }
     
-    public AuthMemberDTO(String username, String password, boolean fromSocial, int grade,
+    public AuthMemberDTO(String userid, String username, String password, boolean fromSocial, int grade,
                              Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
+        this.userid = userid;
         this.grade = grade;
         this.email = username;
         this.password = password;

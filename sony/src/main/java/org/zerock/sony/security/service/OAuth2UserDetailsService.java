@@ -45,6 +45,7 @@ public class OAuth2UserDetailsService extends DefaultOAuth2UserService {
         log.info("EMAIL: " + email);
         Member member = saveSocialMember(email); //조금 뒤에 사용
         AuthMemberDTO AuthMember = new AuthMemberDTO(
+        		member.getUserid(),
                 member.getEmail(),
                 member.getPwd(),
                 true,

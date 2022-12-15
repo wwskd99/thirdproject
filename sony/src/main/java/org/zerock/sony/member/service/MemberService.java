@@ -5,7 +5,9 @@ import org.zerock.sony.member.entity.Member;
 
 public interface MemberService {
 	void register(MemberDTO dto);
+	void modify(MemberDTO dto);
 	MemberDTO memberLogin(String userid, String pwd);
+	MemberDTO FindMember(String userid, boolean social);
 	
 	// DTO -> Entity
     default Member dtoToEntity(MemberDTO dto){
@@ -19,6 +21,7 @@ public interface MemberService {
         		.grade(dto.getGrade())
         		.gender(dto.getGender())
         		.mile(dto.getMile())
+        		.fromSocial(dto.isFromSocial())
         		.build();
         return member;
     }
@@ -34,6 +37,7 @@ public interface MemberService {
         		.grade(member.getGrade())
         		.gender(member.getGender())
         		.mile(member.getMile())
+        		.fromSocial(member.isFromSocial())
         		.build();
         return memberDTO;
     }
