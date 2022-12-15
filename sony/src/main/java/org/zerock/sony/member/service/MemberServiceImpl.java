@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.zerock.sony.member.dto.MemberDTO;
 import org.zerock.sony.member.entity.Member;
+import org.zerock.sony.member.entity.MemberRole;
 import org.zerock.sony.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,11 @@ public class MemberServiceImpl implements MemberService {
 	public void register(MemberDTO dto) {
 		log.info(dto);
 		Member member = dtoToEntity(dto);
+		if(dto.getGrade()==0) {
+			member.addMemberRole(MemberRole.ADMIN);
+		} else {
+			member.addMemberRole(MemberRole.USER);
+		}
         repository.save(member);
 	}
 
@@ -41,4 +47,25 @@ public class MemberServiceImpl implements MemberService {
 		}
 	}
 
+	@Override
+	public MemberDTO FindMember(String userid, boolean social) {
+		Optional<Member> result = repository.findByUserid(userid, social);
+		if(result==null) {
+			return null;
+		} else {
+			MemberDTO memberDTO = entityToDTO(result.get());
+			return memberDTO;
+		}
+	}
+
+	@Override
+	public void modify(MemberDTO dto) {
+		Member member = dtoToEntity(dto);
+		if(dto.getGrade()==0) {
+			member.addMemberRole(MemberRole.ADMIN);
+		} else {
+			member.addMemberRole(MemberRole.USER);
+		}
+        repository.save(member);
+	}
 }

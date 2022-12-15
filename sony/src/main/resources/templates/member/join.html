@@ -97,6 +97,7 @@ tr {
 			<h2>회원 가입</h2>
 			'*' 표시 항목은 필수 입력 항목입니다.
 			<form action="join" method="post" name="frm">
+			<input type="hidden" name="grade" value="1">	<!-- 0 : 관리자 	1 : 일반 -->
 				<table>
 					<tr>
 						<td>이 름</td>
@@ -130,10 +131,11 @@ tr {
 					</tr>
 					<tr>
 						<td>성 별</td>
-						<td><input type="radio" id="male" name="gender" value="1"
+						<td><input type="radio" id="male" name="gender" value="0"
 							checked="checked"> <label for="male">남성</label> <input
-							type="radio" id="female" name="gender" value="2"> <label
+							type="radio" id="female" name="gender" value="1"> <label
 							for="female">여성</label></td>
+							
 					</tr>
 
 					<tr>
