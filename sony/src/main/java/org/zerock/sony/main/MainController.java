@@ -18,4 +18,11 @@ public class MainController {
 	public void home() {
 		
 	}
+	
+	@GetMapping("/test")
+	public void footertest() {
+		
+	}
 }
+
+

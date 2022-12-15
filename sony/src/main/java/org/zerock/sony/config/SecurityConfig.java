@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/member/login").permitAll()
-                .antMatchers("/sample/member").hasRole("USER");
+                .antMatchers("/sample/member").hasRole("USER");        	
 
         http.formLogin().loginPage("/member/login").defaultSuccessUrl("/main/home"); //인가/인증에 문제시 로그인 화면
         http.csrf().disable();
