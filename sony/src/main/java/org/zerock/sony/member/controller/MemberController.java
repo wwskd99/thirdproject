@@ -34,6 +34,7 @@ public class MemberController {
 	@PostMapping("/join")
 	public String joinMember(MemberDTO dto, RedirectAttributes rttr) {
 		log.info(dto);
+		dto.setGrade(1);
 		MService.register(dto);
 		String msg = dto.getUserid();
 		rttr.addFlashAttribute("kind", "reg");
