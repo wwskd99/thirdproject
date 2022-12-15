@@ -9,33 +9,13 @@
 	overflow: auto;
 }
 
-main {
-	background: white;
-	padding-top: 100px;
-	display: block;
-	overflow: auto;
-}
-
-body {
-	font-family: "SSTPro", "Noto Sans KR", -apple-system, BlinkMacSystemFont,
-		"Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif,
-		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-	margin: 0px;
-	display: block;
-	width: 100vw;
-	max-width: 177.78vh;
-	overflow: auto;
-	background: black;
-	margin: 0 auto;
-	text-align: center;
-}
-
 .parent {
 	z-index: 200;
 	height: 100px;
-	width: 100vw;
-	max-width: 177.78vh;
-	position: fixed;
+	width: 100vw;	
+	display: flex;
+	margin-top: -10px;
+	margin-left: -8px; 
 	background-color: black;
 	color: white;
 	justify-content: center;
@@ -79,7 +59,6 @@ body {
 	display: block;
 	line-height: 100px;
 	margin: 0px;
-	padding: 0px 25px;
 	text-align: center;
 	text-decoration: none;
 	color: white;
@@ -386,7 +365,7 @@ $(function () {
 						<li><a>제품</a>
 							<ul>
 								<li><a
-									href="../product/cus_productlist.do?sort=3&category=101">카메라</a></li>
+									href="../product/camera">카메라</a></li>
 
 								<li><a
 									href="../product/cus_productlist.do?sort=3&category=102">비디오
@@ -501,11 +480,11 @@ $(function () {
 				})
 				
 				$(function(){
-						$("btn_mo_search").on("click", function(){
-						$("modal").fadeIn(1000);
+						$("btn_mo_search").click(function(){
+						$("modal").fadeIn(5000);
 					});
 						$("search_btn_close").on("click", function(){
-						$("modal").fadeOut(1000);
+						$("modal").fadeOut(5000);
 					});
 				});
 				
@@ -520,15 +499,28 @@ $(function () {
 				});
 			</script>
 					<div id="menu_right">
-						<a href="../member/login"> <img src="../images/mypage.png" /></a>
+						<div sec:authorize="isAnonymous()">
+							<a href="../member/login"> 
+								<img src="../images/mypage.png" />
+							</a>
+						</div>
+						<div sec:authorize="isAuthenticated()">
+							<a href="../member/loginPage"> 
+								<img src="../images/mypage.png" />
+							</a>
+						</div>
 					</div>
+					
 					<div id="menu_right">
 						<a href="../product/cartsession"> <img
 							src="../images/cart.png" /></a>
 					</div>
 				</div>
 			</div>
+
 		</header>
 	</body>
+</body>
+
 </th:block>
 </html>
