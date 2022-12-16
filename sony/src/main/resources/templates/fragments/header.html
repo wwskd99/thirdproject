@@ -166,6 +166,8 @@ a {
 	padding: 85px 0;
 	font-weight: 500;
 	background-color: #000;
+	
+	
 }
 
 button {
@@ -472,7 +474,7 @@ $(function () {
 				
 				const btnMoSearch = document.getElementById("btn_mo_search")
 				btnMoSearch.addEventListener("click", e => {
-				    modal.style.display = "flex"
+				    $("#modal.search").css('display','flex').hide().fadeIn();
 				})
 				const closeBtn = modal.querySelector(".search_btn_close")
 				closeBtn.addEventListener("click", e => {
@@ -480,7 +482,7 @@ $(function () {
 				})
 				
 				$(function(){
-						$("btn_mo_search").click(function(){
+					$("btn_mo_search").on("click", function(){
 						$("modal").fadeIn(5000);
 					});
 						$("search_btn_close").on("click", function(){

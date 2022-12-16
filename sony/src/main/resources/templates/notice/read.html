@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>게시글 상세 보기</title>
+<link rel="stylesheet" href="../css/shopping.css">
+<style type="text/css">
+#input1 {
+	width: 100px;
+	height: 40px;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom : 3px solid black;
+}
+</style>
+</head>
+<body>
+<main>
+	<div id="wrap" align="center">
+		<h1>게시글 상세보기</h1>
+		<table>
+			<tr>
+				<th>작성일</th>
+				<td>[[${#temporals.format(notice.regDate, 'yyyy/MM/dd HH:mm:ss')}]]</td>
+				<th>조회수</th>
+				<td>[[${notice.readcount}]]</td>
+			</tr>
+			<tr>
+				<th>제목</th>
+				<td colspan="3">[[${notice.title}]]</td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td colspan="3"><pre>[[${notice.content}]]</pre></td>
+			</tr>
+		</table>
+		<!-- 게시글 수정/삭제를 위해 본인 확인이 필요하고, 이를 팝업창을 띄워서 하고 있음
+			2. Ajax(javascript/jQuery)를 이용해서 서버와 통신하여 비밀번호 확인을 할 수 있음.
+ -->
+ 		<div th:if="${member.grade == 0}">
+		<br><br> 
+			<input id="input1" type="button" value="게시글 수정" th:onclick="location.href='/notice/modify?num=[[${notice.num}]]'">
+			<input id="input1" type="button" value="게시글 삭제" th:onclick="location.href='/notice/delete?num=[[${notice.num}]]'">
+			<input id="input1" type="button" value="게시글 리스트" onclick="location.href='list'">
+			<input id="input1" type="button" value="게시글 등록" onclick="location.href='write'">
+		</div>
+	</div>
+	</main>
+</body>
+</html>
