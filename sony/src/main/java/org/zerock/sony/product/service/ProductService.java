@@ -16,7 +16,6 @@ public interface ProductService {
 				.category_id(dto.getCategory_id())
 				.category_name(dto.getCategory_name())
 				.stock(dto.getStock())
-				.writedate(dto.getWritedate())
 				.build();
 		return product;
 	}
@@ -31,7 +30,8 @@ public interface ProductService {
 				.category_id(product.getCategory_id())
 				.category_name(product.getCategory_name())
 				.stock(product.getStock())
-				.writedate(product.getWritedate())
+				.modDate(product.getModDate())
+				.regDate(product.getRegDate())
 				.build();
 		return productDTO;
 	}
