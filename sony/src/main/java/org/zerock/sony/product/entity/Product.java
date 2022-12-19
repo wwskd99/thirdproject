@@ -1,11 +1,9 @@
 package org.zerock.sony.product.entity;
 
-import java.sql.Timestamp;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import org.zerock.sony.member.entity.Member;
+import org.zerock.common.entity.BaseEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +17,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @ToString
-public class Product {
+public class Product extends BaseEntity {
 	@Id
 	private int code;
 	private String name;
@@ -29,5 +27,4 @@ public class Product {
 	private int category_id;
 	private String category_name;
 	private int stock;
-	private Timestamp writedate;
 }
