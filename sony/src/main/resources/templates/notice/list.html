@@ -10,12 +10,12 @@
 		<h1>공지 사항</h1>
 		<h4>소니스토어에 많이 물어보시는 질문과 새로운 소식을 만나보세요.</h4>
 		<table class="list">
+				<tr>
 
-			<tr th:if="${member.grade == 0}">
-					<td colspan="5" style="border: white; text-align: right">
-						<a href="write">게시글 등록</a>
+					<td sec:authorize="hasRole('ADMIN')" colspan="5" style="border: white; text-align: right">
+							<a href="write">게시글 등록</a>
 					</td>
-			</tr>
+				</tr>
 			<tr>
 				<th>번호</th>
 				<th>제목</th>

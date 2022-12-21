@@ -27,19 +27,19 @@ public class test {
 
 
             Member member = Member.builder()
-                    .userid("test")
+                    .userid("test1")
                     .address("경기도")
-                    .email("test@test.com")
-                    .phone("010-0000-0000")
-                    .name("test")
+                    .email("test1@test.com")
+                    .phone("010-0000-0001")
+                    .name("test1")
                     .fromSocial(false)
                     .roleSet(new HashSet<MemberRole>())
                     .pwd(passwordEncoder.encode("1234"))
                     .build();
     
             //default role
-            member.addMemberRole(MemberRole.USER);
-//            member.addMemberRole(MemberRole.ADMIN);
+//            member.addMemberRole(MemberRole.USER);
+            member.addMemberRole(MemberRole.ADMIN);
 
             repository.save(member);
     }
