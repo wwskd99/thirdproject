@@ -1,7 +1,9 @@
 package org.zerock.sony.product.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import org.zerock.common.entity.BaseEntity;
 
@@ -24,7 +26,7 @@ public class Product extends BaseEntity {
 	private int price;
 	private String pictureUrl;
 	private String description;
-	private int category_id;
-	private String category_name;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Category category;
 	private int stock;
 }

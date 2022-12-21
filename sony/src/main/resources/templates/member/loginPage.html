@@ -85,7 +85,7 @@ height : 20%;
 </head>
 <main>
 	<div id="wrap" align="center">
-		<div th:if="${member.grade==0}">
+		<div sec:authorize="hasRole('ADMIN')">
 				<!-- 관리자일 때 -->
 				<h2>관리자 전용 페이지</h2>
 				<form action="../logout">
@@ -117,7 +117,7 @@ height : 20%;
 					</table>
 				</form>
 			</div>
-  			<div th:if="${member.grade==1}">
+  			<div sec:authorize="hasRole('USER')">
 				<h2>회원 전용 페이지</h2>
 				<form action="../logout">
 					<table>

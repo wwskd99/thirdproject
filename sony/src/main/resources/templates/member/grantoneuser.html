@@ -1,0 +1,57 @@
+<div id="modal-window">
+	<div class="title">
+		<h2>유저 정보</h2><br>
+	</div>
+	<form method="post" action="/member/grant">
+		<input type="hidden" name="userid" th:value="${member.userid}">
+		<input type="hidden" name="fromSocial" th:value="${member.fromSocial}">
+		<div class="name">
+			<h3>이름 : [[${member.name}]]
+			</h3>
+		</div>
+		<div class="userid">
+			<h3>아이디 : [[${member.userid}]]
+			</h3>
+		</div>
+		<div class="email">
+			<h3>이메일 : [[${member.email}]]
+			</h3>
+		</div>
+		<div class="address">
+			<h3>주소 : [[${member.address}]]
+			</h3>
+		</div>
+		<div class="phone">
+			<h3>전화번호 : [[${member.phone}]]
+			</h3>
+		</div>
+		<div class="gender">
+			<h3>
+				<div th:if="${member.gender==0}">성별 : 남성</div>
+				<div th:if="${member.gender==1}">성별 : 여성</div>
+			</h3>
+		</div>
+		<div class="grade">
+			<h3> 등급 : 
+				<div th:if="!${member.userid == userid}">
+					<div th:if="${member.grade==0}">
+						<input type="radio" name="grade" value="0" checked>관리자
+						<input type="radio" name="grade" value="1">사용자
+					</div>
+					<div th:if="${member.grade==1}">
+						<input type="radio" name="grade" value="0">관리자
+						<input type="radio" name="grade" value="1" checked>사용자
+					</div>
+				</div>
+				<div th:if="${member.userid == userid}">
+					본인
+				</div>
+			</h3>
+		</div>
+
+		<div class="button">
+			<input type="submit" value="제출">
+		</div>
+	</form>
+	<button class="close" onclick="modalOff()">닫기</button>
+</div>

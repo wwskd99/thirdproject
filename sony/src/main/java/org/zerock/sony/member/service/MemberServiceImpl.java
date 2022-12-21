@@ -1,6 +1,9 @@
 package org.zerock.sony.member.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 import org.springframework.stereotype.Service;
 import org.zerock.sony.member.dto.MemberDTO;
@@ -67,5 +70,19 @@ public class MemberServiceImpl implements MemberService {
 			member.addMemberRole(MemberRole.USER);
 		}
         repository.save(member);
+	}
+
+	@Override
+	public List<MemberDTO> FindAllMember() {
+		List<Member> result = repository.findAll();
+		List<MemberDTO> MemberList = new ArrayList<>();
+		if(result.isEmpty()) {
+			return null;
+		} else {
+			result.forEach(arr -> {
+				MemberList.add(entityToDTO(arr));
+			});
+			return MemberList;
+		}
 	}
 }

@@ -13,8 +13,7 @@ public interface ProductService {
 				.price(dto.getPrice())
 				.pictureUrl(dto.getPictureUrl())
 				.description(dto.getDescription())
-				.category_id(dto.getCategory_id())
-				.category_name(dto.getCategory_name())
+				.category(dto.getCategory())
 				.stock(dto.getStock())
 				.build();
 		return product;
@@ -27,8 +26,7 @@ public interface ProductService {
 				.price(product.getPrice())
 				.pictureUrl(product.getPictureUrl())
 				.description(product.getDescription())
-				.category_id(product.getCategory_id())
-				.category_name(product.getCategory_name())
+				.category(product.getCategory())
 				.stock(product.getStock())
 				.modDate(product.getModDate())
 				.regDate(product.getRegDate())

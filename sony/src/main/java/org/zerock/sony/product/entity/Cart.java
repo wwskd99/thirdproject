@@ -20,17 +20,13 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @ToString
-public class Cart extends BaseEntity {
+public class Cart {
 	@Id
 	private int cart_id; 
 	@ManyToOne(fetch = FetchType.LAZY)
     private Member buyer;
+	@ManyToOne(fetch = FetchType.LAZY)
+    private Product product;
+
 	private int amount;
-	private int code;
-	private int category_id;
-	private String name;
-	private int price;
-	private String pictureurl;
-	private String description;
-	private int stock;
 }
