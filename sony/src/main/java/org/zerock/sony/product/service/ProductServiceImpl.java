@@ -15,10 +15,11 @@ public class ProductServiceImpl implements ProductService {
 	private final ProductRepository repository;
 	
 	@Override
-	public void register(ProductDTO dto) {
+	public Long register(ProductDTO dto) {
 		log.info(dto);
 		Product product = dtoToEntity(dto);
 		repository.save(product);
+		return product.getCode();
 	}
-
+	
 }

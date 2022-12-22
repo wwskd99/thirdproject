@@ -4,19 +4,17 @@ import org.zerock.sony.product.dto.ProductDTO;
 import org.zerock.sony.product.entity.Product;
 
 public interface ProductService {
-	void register(ProductDTO dto);
+	Long register(ProductDTO dto);
 	
 	default Product dtoToEntity(ProductDTO dto) {
 		Product product = Product.builder()
 				.code(dto.getCode())
 				.name(dto.getName())
 				.price(dto.getPrice())
-				.pictureUrl(dto.getPictureUrl())
 				.description(dto.getDescription())
 				.category_id(dto.getCategory_id())
 				.category_name(dto.getCategory_name())
 				.stock(dto.getStock())
-				.writedate(dto.getWritedate())
 				.build();
 		return product;
 	}
@@ -31,7 +29,8 @@ public interface ProductService {
 				.category_id(product.getCategory_id())
 				.category_name(product.getCategory_name())
 				.stock(product.getStock())
-				.writedate(product.getWritedate())
+				.regDate(product.getRegDate())
+        		.modDate(product.getModDate())
 				.build();
 		return productDTO;
 	}
