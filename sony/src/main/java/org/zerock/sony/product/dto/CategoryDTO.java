@@ -1,22 +1,17 @@
-package org.zerock.sony.product.entity;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
+package org.zerock.sony.product.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Entity
+@Data
+@ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@ToString
-public class Category {
-	@Id
+public class CategoryDTO {
 	private int id;
 	private String name;
 }

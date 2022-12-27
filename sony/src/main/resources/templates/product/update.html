@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<meta charset="UTF-8">
+<title>상품 수정</title>
+<style type="text/css">
+#input1 {
+	width: 60px;
+	height: 40px;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom : 3px solid black;
+}
+
+#input2 {
+	width: 80px;
+	height: 40px;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom : 3px solid black;
+}
+</style>
+</head>
+<body>
+<main>
+<div id="wrap" align="center">
+	<h1>상품 수정 - 관리자 페이지</h1>
+	<form method="post" th:action="@{/product/update}" name="frm">
+	<!-- hidden 사용자에게 보이지 않고 서버로 전송할 목적으로 만든다. -->
+	    <input type="hidden" name="code" th:value="${product.code}">
+			<table>
+		    	<tr>
+		    		<th style="width: 80px">상품명</th>
+					<td><input type="text" name="name" th:value="${product.name}" size="80"></td>
+			    </tr>
+			    <tr>
+			    	<th>가 격</th>
+					<td><input type="text" name="price" th:value="${product.price}"> 원</td>
+				</tr>
+				<tr>
+				<th>카테고리 id</th>
+					<td><input type="text" name="category.id" th:value="${product.category.id}" size="80"></td>
+				</tr>
+				<tr>
+				<th>카테고리 name</th>
+					<td><input type="text" name="category.name" th:value="${product.category.name}" size="80" readonly></td>
+				</tr>
+				<tr>
+					<th>재 고</th>
+					<td><input type="text" name="stock" th:value="${product.stock}" size="40">개</td>
+				</tr>
+			    <tr>
+					<th>설 명</th>
+					<td><textarea cols="90" rows="10" name="description">[[${product.description}]]</textarea></td>
+				</tr>
+			</table>
+			<br>
+			<div class="box">
+		    </div>
+		    <input id="input1" type="submit" class="btn btn-primary" value="수정">
+	    	<input id="input2" type="reset" value="다시작성">
+	    	<input id="input1" type="button" value="목록" onclick="location.href='list'">
+	</form>
+	<br>
+	<table>
+		<tr>
+			<th valign="top">사 진</th>
+				<td align="center">
+					<input type="file" class="custom-file-input files" name="imageDTOList" multiple><br>
+					(주의사항 : 이미지를 변경하고자 할때만 선택하시오)
+					<div class="uploadResult">
+						<ul>
+						</ul>
+						<div th:if="${!#lists.isEmpty(product.imageDTOList)}">
+							<br>
+			               	 <ul th:each="imagelist : ${product.imageDTOList}">
+			               	 	<li th:data-name="${imagelist.imgName}" th:data-path="${imagelist.path}" th:data-uuid="${imagelist.uuid}">
+					                <div>
+					                	<button type='button' th:data-file="|${imagelist.path}/${imagelist.uuid}_${imagelist.imgName}" class='btn-warning btn-sm'>X</button><br>
+					              		<img th:src="@{/display?fileName=}+${imagelist.getThumbnailURL()}">
+					                </div>
+				                </li>
+			                </ul>
+		                </div>
+		            </div>
+		    	</td>
+			</tr>
+		<tr>
+	</table>
+<script>
+    $(document).ready(function(e) {
+    	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz|tiff)$");
+        var maxSize = 10485760; //10MB
+
+        function checkExtension(fileName, fileSize){
+            if(fileSize >= maxSize){
+                alert("파일 사이즈 초과");
+                return false;
+            }
+            if(regex.test(fileName)){
+                alert("해당 종류의 파일은 업로드할 수 없습니다.");
+                return false;
+            }
+            return true;
+        }
+
+        $(".custom-file-input").on("change", function() {
+        	// I.E 경우를 고려하여 첨부파일만 가져오기
+            var fileName = $(this).val().split("\\").pop();
+
+            var formData = new FormData();
+            var inputFile = $(this);
+            var files = inputFile[0].files;
+            var appended = false;
+            for (var i = 0; i < files.length; i++) {
+                if(!checkExtension(files[i].name, files[i].size) ){
+                    return false;
+                }
+                console.log(files[i]);
+                formData.append("uploadFiles", files[i]);
+                appended = true;
+            }
+
+            //upload를 하지 않는다.
+            if (!appended) {return;}
+            // 첨부 파일에 대한 로깅
+            for (var value of formData.values()) {
+                console.log(value);
+            }
+            //실제 업로드 부분
+            //upload ajax
+            $.ajax({
+                url: '/uploadAjax',
+                processData: false,
+                contentType: false,
+                data: formData,
+                type: 'POST',
+                dataType:'json',
+                success: function(result){
+                    console.log(result);
+                    showResult(result);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    console.log(textStatus);
+                }
+            }); //$.ajax
+        }); //end change event
+		function showResult(uploadResultArr){
+            var uploadUL = $(".uploadResult ul");
+            var str ="";
+            $(uploadResultArr).each(function(i, obj) {
+                str += "<li data-name='" + obj.fileName + "' data-path='"+obj.folderPath+"' data-uuid='"+obj.uuid+"'>";
+                str + " <div>";
+                str += "<button type='button' data-file=\'" + obj.imageURL + "\' "
+                str += "class='btn-warning btn-sm'>X</button><br>";
+                str += "<img src='/display?fileName=" + obj.thumbnailURL + "'>";
+                str += "</div>";
+                str + "</li>";
+            });
+            uploadUL.append(str);
+        }
+        
+        $(".uploadResult ").on("click", "li button", function(e){
+            console.log("delete file");
+            var targetFile = $(this).data("file");
+            var targetLi = $(this).closest("li");
+
+            $.ajax({
+                url: '/removeFile',
+                data: {fileName: targetFile},
+                dataType:'text',
+                type: 'POST',
+                success: function(result){
+                    alert(result);
+                    targetLi.remove();
+                }
+            }); //$.ajax
+        });
+        
+        //prevent submit
+        $(".btn-primary").on("click", function(e) {
+            e.preventDefault();
+            var str = "";
+            $(".uploadResult li").each(function(i,obj){
+                var target = $(obj);
+                str += "<input type='hidden' name='imageDTOList["+i+"].imgName' value='"+target.data('name') +"'>";
+                str += "<input type='hidden' name='imageDTOList["+i+"].path' value='"+target.data('path')+"'>";
+                str += "<input type='hidden' name='imageDTOList["+i+"].uuid' value='"+target.data('uuid')+"'>";
+            });
+            //태그들이 추가된 것을 확인한 후에 comment를 제거
+            $(".box").html(str);
+            $("form").submit();
+        });
+    }); //document ready
+</script>
+</div>
+</main>
+</body>
+</html>
