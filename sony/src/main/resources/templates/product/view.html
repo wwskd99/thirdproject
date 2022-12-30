@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>dd</title>
+<link rel="stylesheet" href="../css/productlist.css">
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+
+function amountPlus(){
+	if (cb.amount.value >= [[${product.stock}]]){
+		cb.amount.value = [[${product.stock}]]
+	
+	} else {
+		cb.amount.value++;
+	}
+	
+}
+
+function amountMinus(){
+	if (cb.amount.value <= 1){
+		cb.amount.value = 0;	
+	} else {
+		cb.amount.value--;
+	}
+	
+}
+
+
+function cartCheck(){ 
+	if(document.getElementById("amounttext").value < 1){
+		alert ("상품을 한개 이상 넣어주십시오")
+	}else{
+    	var value = $("form[name=cb]").serialize() ;
+  
+    	if(confirm("장바구니에 담았습니다. 장바구니로 이동하시겠습니까?")){
+    		$.ajax({
+    			url : "cart",
+    			type : "post",
+    			data : value,
+    			success : function (){
+    			
+    				window.location.href="cart";
+    			},
+    			error : function() {
+    			
+    			}
+    		});
+    				
+    	}else{
+    		
+    		$.ajax({
+    			url : "cart",
+    			type : "post",
+    			data : value,
+    			success : function (){
+    				
+    			},
+    			error : function() {
+    				
+    			}
+    		});   		
+    	}
+	}
+}
+</script>
+</head>
+<body>
+	<main>
+		<div id="product_view_main">
+			<div id = "product_view_left">
+ 				<div th:if="!${#lists.isEmpty(product.imageDTOList)}">
+					<img th:src="@{/display?fileName=}+${product.imageDTOList[0].getImageURL()}">
+				</div>
+				<div th:if="${#lists.isEmpty(product.imageDTOList)}">
+					사진 없음
+				</div>
+			</div>
+			
+			<div id= "product_view_right">
+				<p id = "product_view_name">[[${product.name}]]</p>
+				<p id = "product_view_des">[[${product.description}]]</p>
+				<Strong id = "product_view_price">[[${product.price}]]</Strong>원
+			
+				<div id = "product_view_form_div">
+					<form id = "product_view_form" name = "cb" method="post">
+						<div id = "product_view_des2" name = "cb2">
+							<p id = "product_view_des2_name"> 제품 : [[${product.name}]] </p>
+							<div>
+								<input type="button" value="-1" onClick="amountMinus()" id = "amountbutton">							
+								<input id = "amounttext" type="text" name="amount" value="0">				
+								<input type="button" value="+1" onClick="amountPlus()" id = "amountbutton">
+								<br><br><br><br><br><br>
+								<span> 합계 : </span>
+							</div>
+						</div>
+						<div id = "productview_cartbuy">
+							<input type="hidden" name="code" th:value="${product.code}"> 
+							<input id = "productview_cart" type="button" value="장바구니" onClick="cartCheck()">
+						</div>	
+					</form>	
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>
