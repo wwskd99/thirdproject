@@ -7,18 +7,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.zerock.common.dto.PageRequestDTO;
 import org.zerock.sony.category.service.CategoryService;
 import org.zerock.sony.member.dto.MemberDTO;
 import org.zerock.sony.member.service.MemberService;
+import org.zerock.sony.product.dto.CartDTO;
 import org.zerock.sony.product.dto.ProductDTO;
-import org.zerock.sony.product.entity.Category;
 import org.zerock.sony.product.repository.ImageRepository;
+import org.zerock.sony.product.service.CartService;
 import org.zerock.sony.product.service.ProductService;
 import org.zerock.sony.security.dto.AuthMemberDTO;
 
@@ -34,10 +32,31 @@ public class ProductController {
 	private final CategoryService CService;
 	private final ProductService PService;
 	private final ImageRepository PiService;
+	private final CartService cartService;
 
 	@GetMapping("/camera")
-	public void camera() {
+	public void camera(PageRequestDTO pageRequestDTO, Model model) {
+		model.addAttribute("category", "101");
+		model.addAttribute("result",PService.sortHigh(pageRequestDTO));
+		log.info(PService.sortHigh(pageRequestDTO).getDtoList());
+	}
 	
+	@PostMapping("/camera")
+	public void sort(PageRequestDTO pageRequestDTO, Model model, int sort) {
+		log.info(sort);
+		model.addAttribute("category", "101");
+		//1:high
+		if(sort==1) {
+			model.addAttribute("result",PService.sortHigh(pageRequestDTO));
+		}
+		//2:low
+		else if(sort==2) {
+			model.addAttribute("result",PService.sortLow(pageRequestDTO));
+		}
+		//3:new
+		else {
+			model.addAttribute("result",PService.sortNew(pageRequestDTO));
+		}
 	}
 
 	@GetMapping("/videocamera")
@@ -98,5 +117,19 @@ public class ProductController {
 	public String delete(long code) {
 		PService.delete(code);
 		return "redirect:/product/list";
+	}
+	
+	@GetMapping("/view")
+	public void view(long code, Model model) {
+		model.addAttribute("product", PService.findOneProduct(code));
+	}
+	
+	@PostMapping("/cart")
+	public void cartPush(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, long code, int amount) {
+		CartDTO cartDTO = new CartDTO();
+		cartDTO.setAmount(amount);
+		cartDTO.setBuyer(MService.FindMember(authmemberDTO.getUserid(), authmemberDTO.isFromSocial()));
+		cartDTO.setProduct(PService.findOneProduct(code));
+		cartService.insert(cartDTO);
 	}
 }

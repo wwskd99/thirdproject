@@ -102,4 +102,61 @@ public class ProductServiceImpl implements ProductService {
 		}
 	}
 
+	@Override
+	public PageResultDTO<ProductDTO, Object[]> sortHigh(PageRequestDTO requestDTO) {
+		Pageable pageable = requestDTO.getPageable(Sort.by("price").descending());
+		Page<Object[]> result = repository.findAllWithImage(pageable);
+		
+		log.info("==============================================");
+        result.getContent().forEach(arr -> {
+            log.info(Arrays.toString(arr));
+        });
+        
+		Function<Object[], ProductDTO> fn = (arr -> entityToDTO(
+				
+                (Product)arr[0] ,
+                (List<Image>)(Arrays.asList((Image)arr[1])))
+        );
+		log.info(fn.toString());
+        return new PageResultDTO<>(result, fn);
+	}
+	
+	@Override
+	public PageResultDTO<ProductDTO, Object[]> sortLow(PageRequestDTO requestDTO) {
+		Pageable pageable = requestDTO.getPageable(Sort.by("price").ascending());
+		Page<Object[]> result = repository.findAllWithImage(pageable);
+		
+		log.info("==============================================");
+        result.getContent().forEach(arr -> {
+            log.info(Arrays.toString(arr));
+        });
+        
+		Function<Object[], ProductDTO> fn = (arr -> entityToDTO(
+				
+                (Product)arr[0] ,
+                (List<Image>)(Arrays.asList((Image)arr[1])))
+        );
+		log.info(fn.toString());
+        return new PageResultDTO<>(result, fn);
+	}
+	
+	@Override
+	public PageResultDTO<ProductDTO, Object[]> sortNew(PageRequestDTO requestDTO) {
+		Pageable pageable = requestDTO.getPageable(Sort.by("code").descending());
+		Page<Object[]> result = repository.findAllWithImage(pageable);
+		
+		log.info("==============================================");
+        result.getContent().forEach(arr -> {
+            log.info(Arrays.toString(arr));
+        });
+        
+		Function<Object[], ProductDTO> fn = (arr -> entityToDTO(
+				
+                (Product)arr[0] ,
+                (List<Image>)(Arrays.asList((Image)arr[1])))
+        );
+		log.info(fn.toString());
+        return new PageResultDTO<>(result, fn);
+	}
+
 }

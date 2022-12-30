@@ -81,9 +81,11 @@ public class MemberController {
 	@GetMapping("/grant")
 	public void grant(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, Model model) {
 		List<MemberDTO> memberDTO = MService.FindAllMember();
+		log.info(authmemberDTO.getUserid());
+		log.info(memberDTO);
 		
 		model.addAttribute("result", memberDTO);
-		model.addAttribute("userid", authmemberDTO.getUserid());
+		model.addAttribute("user_id", authmemberDTO.getUserid());
 	}
 	
 	@PostMapping("/grant")
