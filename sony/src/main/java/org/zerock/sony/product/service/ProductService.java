@@ -21,6 +21,9 @@ public interface ProductService {
 	PageResultDTO<ProductDTO, Object[]> getList(PageRequestDTO requestDTO);
 	ProductDTO findOneProduct(long code);
 	void delete(long code);
+	PageResultDTO<ProductDTO, Object[]> sortHigh(PageRequestDTO requestDTO);
+	PageResultDTO<ProductDTO, Object[]> sortLow(PageRequestDTO requestDTO);
+	PageResultDTO<ProductDTO, Object[]> sortNew(PageRequestDTO requestDTO);
 	
 	default Map<String, Object> dtoToEntity(ProductDTO dto) {
 		Map<String, Object> entityMap = new HashMap<>();
