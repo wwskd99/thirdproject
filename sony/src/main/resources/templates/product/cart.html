@@ -134,35 +134,35 @@
 
 						<div id="cart_center_list">
 					
-							<c:forEach var="ca" items="${cart}">
+							<div th:each="cart : ${cartList}">
 
 
 								<div id="cart_center_list_check">
 									<input id="rowcheck_button" type="checkbox" name="rowCheck"
-										value="${ca.cart_id}">
+										value="${cart.cart_id}">
 								</div>
-								<div id="cart_center_list_img">
+<!--  								<div id="cart_center_list_img">
 									<img id="cartline_img" src="../${ca.pictureurl}">
-								</div>
+								</div>	-->
 								<div id="cart_center_list_name">
-									<span>${ca.name}</span>
+									<span>${cart.name}</span>
 								</div>
 								<div id="cart_center_list_price">
-									<span>${ca.price} 원</span>
+									<span>${cart.price} 원</span>
 								</div>
 								<div id="cart_center_list_amount">
-									<span>${ca.amount}</span>
+									<span>${cart.amount}</span>
 								</div>
 								<div id="cart_center_list_sum">
 								
-									<span>${ca.amount*ca.price} 원</span>
+									<span>${cart.amount*cart.price} 원</span>
 								</div>
 								<div id="cart_center_list_delete">
 									<input id="delete_button" type="button" value="삭제"
-										onClick="location.href='cus_delete.do?rowCheck=${ca.cart_id}'">
+										onClick="location.href='cus_delete.do?rowCheck=${cart.cart_id}'">
 								</div>
 
-							</c:forEach>
+							</div>
 						</div>
 					</div>
 

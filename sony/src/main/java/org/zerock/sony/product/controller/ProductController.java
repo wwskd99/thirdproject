@@ -125,11 +125,14 @@ public class ProductController {
 	}
 	
 	@PostMapping("/cart")
-	public void cartPush(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, long code, int amount) {
+	public void cartPush(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, long code, int amount, Model model) {
 		CartDTO cartDTO = new CartDTO();
 		cartDTO.setAmount(amount);
 		cartDTO.setBuyer(MService.FindMember(authmemberDTO.getUserid(), authmemberDTO.isFromSocial()));
 		cartDTO.setProduct(PService.findOneProduct(code));
 		cartService.insert(cartDTO);
+		
+		// 카트리스트 불러오고
+		// model.addAttribute("cartList",cartDTOList);
 	}
 }
