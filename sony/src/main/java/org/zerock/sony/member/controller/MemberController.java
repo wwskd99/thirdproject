@@ -1,5 +1,7 @@
 package org.zerock.sony.member.controller;
 
+import java.util.List;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -7,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.sony.member.dto.MemberDTO;
 import org.zerock.sony.member.entity.Member;
@@ -74,5 +77,31 @@ public class MemberController {
 		dto.setPwd(passwordEncoder.encode(dto.getPwd()));
 		MService.modify(dto);
 		return "redirect:/logout";
+	}
+	
+	@GetMapping("/grant")
+	public void grant(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, Model model) {
+		List<MemberDTO> memberDTO = MService.FindAllMember();
+		
+		model.addAttribute("result", memberDTO);
+		model.addAttribute("userid", authmemberDTO.getUserid());
+	}
+	
+	@PostMapping("/grant")
+	public String grantuser(@RequestParam("userid") String userid, @RequestParam("grade") int grade, @RequestParam("fromSocial") boolean fromsocial) {
+		MemberDTO member = MService.FindMember(userid, fromsocial);
+		member.setGrade(grade);
+		MService.modify(member);
+		return "redirect:/member/grant";
+	}
+	
+	@PostMapping("/grantoneuser")
+	public void grantoneuser(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, Model model, int index) {
+		List<MemberDTO> memberDTO = MService.FindAllMember();
+		MemberDTO member = memberDTO.get(index);
+		model.addAttribute("member", member);
+		log.info(authmemberDTO.getUserid());
+		model.addAttribute("userid", authmemberDTO.getUserid());
+		
 	}
 }

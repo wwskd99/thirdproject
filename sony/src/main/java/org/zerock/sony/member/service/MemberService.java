@@ -1,5 +1,7 @@
 package org.zerock.sony.member.service;
 
+import java.util.List;
+
 import org.zerock.sony.member.dto.MemberDTO;
 import org.zerock.sony.member.entity.Member;
 
@@ -8,6 +10,7 @@ public interface MemberService {
 	void modify(MemberDTO dto);
 	MemberDTO memberLogin(String userid, String pwd);
 	MemberDTO FindMember(String userid, boolean social);
+	List<MemberDTO> FindAllMember();
 	
 	// DTO -> Entity
     default Member dtoToEntity(MemberDTO dto){

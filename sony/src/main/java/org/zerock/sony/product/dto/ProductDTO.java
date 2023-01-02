@@ -1,6 +1,5 @@
 package org.zerock.sony.product.dto;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
@@ -20,8 +19,7 @@ public class ProductDTO {
 	private int price;
 	private String pictureUrl;
 	private String description;
-	private int category_id;
-	private String category_name;
+	private int category;
 	private int stock;
 	private LocalDateTime regDate, modDate;
 }

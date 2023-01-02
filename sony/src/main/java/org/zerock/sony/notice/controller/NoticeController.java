@@ -26,9 +26,7 @@ public class NoticeController {
 	private final NoticeService NService;
 	
 	@GetMapping("/list")
-	public void list(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, PageRequestDTO pageRequestDTO, Model model) {
-		MemberDTO memberDTO = MService.FindMember(authmemberDTO.getUserid(), authmemberDTO.isFromSocial());
-		model.addAttribute("member", memberDTO);
+	public void list(PageRequestDTO pageRequestDTO, Model model) {
 		model.addAttribute("result", NService.getList(pageRequestDTO));
 	}
 	

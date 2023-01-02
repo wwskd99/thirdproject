@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<style type="text/css">
+.btn-modal {
+	border: none;
+	background: black;
+	width: 100%;
+	height: 40px;
+	color: white;
+	border-radius: 10px;
+	cursor: pointer;
+}
+#modal.modal-overlay {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: none;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background: rgba(255, 255, 255, 0.25);
+	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+	backdrop-filter: blur(1.5px);
+	-webkit-backdrop-filter: blur(1.5px);
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	Z-INDEX : 20;
+}
+
+#modal-window {
+	background: white;
+	box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+	backdrop-filter: blur(13.5px);
+	-webkit-backdrop-filter: blur(13.5px);
+	border-radius: 10px;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	width: 400px;
+	height: 570px;
+	position: relative;
+	top: 0px;
+	padding: 10px;
+}
+</style>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<main>
+		<div id="wrap" align="center">
+			<div id="wrap" align="center">
+				<h1>권한 부여</h1>
+				<table class="list">
+					<tr>
+						<th>이 름</th>
+						<th>아이디</th>
+						<th>이메일</th>
+						<th>성 별</th>
+					</tr>
+					<tr th:each="grantlist, state : ${result}">
+						<td class="name">
+							<button class="btn-modal" th:value="${state.index}">[[${grantlist.name}]]</button>
+						<td class="userid">
+							<input type="text" name="userid" size="10" th:value="${grantlist.userid}" readonly></td>
+						<td class="email">[[${grantlist.email}]]</td>
+
+						<td class="gender">
+							<div th:if="${grantlist.gender==0}">
+								남 성
+							</div>
+							<div th:if="${grantlist.gender==1}">
+								여 성
+							</div>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<!-- 모달창 -->
+			<div id="modal" class="modal-overlay">
+				<div id="modal-window">
+					<div class="title">
+						<h2>유저 정보</h2><br>
+					</div>
+					<form method="post" action="/member/grant">
+						<div class="name">
+							<h3>이름 : 
+							</h3>
+						</div>
+						<div class="userid">
+							<h3>아이디 : 
+							</h3>
+						</div>
+						<div class="email">
+							<h3>이메일 : 
+							</h3>
+						</div>
+						<div class="address">
+							<h3>주소 : 
+							</h3>
+						</div>
+						<div class="phone">
+							<h3>전화번호 : 
+							</h3>
+						</div>
+						<div class="gender">
+							<h3>
+							</h3>
+						</div>
+						<div class="grade">
+							<h3>등급 : 
+							</h3>
+						</div>
+						<div class="button">
+							<input type="submit" value="제출">
+						</div>
+					</form>
+					<button class="close" onclick="modalOff()">닫기</button>
+				</div>
+		</div>
+	</main>
+</body>
+<script type="text/javascript">
+$(document).ready(function() {
+	$(".btn-modal").on("click", function(){
+		modalOn($(this).val())
+	});
+});
+const modal = document.getElementById("modal")
+function modalOn(index) {
+	var request = $.ajax({
+		url: "/member/grantoneuser",
+		method: "POST",
+		data: {index : index},
+		dataType: "html"
+	});
+	request.done(function(data){
+		$("#modal-window").replaceWith(data)
+		modal.style.display = "flex"
+	});
+	request.fail(function(){
+		alert("fail")
+	});
+}
+function isModalOn() {
+    return modal.style.display === "flex"
+}
+function modalOff() {
+    modal.style.display = "none"
+}
+modal.addEventListener("click", e => {
+    const evTarget = e.target
+    if(evTarget.classList.contains("modal-overlay")) {
+        modalOff()	// 외부 클릭 시
+    }
+})
+window.addEventListener("keyup", e => {
+    if(isModalOn() && e.key === "Escape") {
+        modalOff()
+    }
+})
+</script>
+</html>
