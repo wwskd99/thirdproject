@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import org.zerock.common.entity.BaseEntity;
-import org.zerock.sony.product.dto.CategoryDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
