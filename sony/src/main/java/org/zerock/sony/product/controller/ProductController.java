@@ -34,47 +34,30 @@ public class ProductController {
 	private final ImageRepository PiService;
 	private final CartService cartService;
 
-	@GetMapping("/camera")
-	public void camera(PageRequestDTO pageRequestDTO, Model model) {
-		model.addAttribute("category", "101");
-		model.addAttribute("result",PService.sortHigh(pageRequestDTO));
-		log.info(PService.sortHigh(pageRequestDTO).getDtoList());
+	@GetMapping("/cus_list")
+	public void camera(PageRequestDTO pageRequestDTO, Model model, int category) {
+		model.addAttribute("category", category);
+		model.addAttribute("result",PService.sortNew(pageRequestDTO,category));
 	}
 	
-	@PostMapping("/camera")
-	public void sort(PageRequestDTO pageRequestDTO, Model model, int sort) {
-		log.info(sort);
-		model.addAttribute("category", "101");
+	@PostMapping("/cus_list")
+	public void sort(PageRequestDTO pageRequestDTO, Model model, int sort, int category) {
+		log.info(category);
+		model.addAttribute("category", category);
 		//1:high
 		if(sort==1) {
-			model.addAttribute("result",PService.sortHigh(pageRequestDTO));
+			model.addAttribute("result",PService.sortHigh(pageRequestDTO,category));
 		}
 		//2:low
 		else if(sort==2) {
-			model.addAttribute("result",PService.sortLow(pageRequestDTO));
+			model.addAttribute("result",PService.sortLow(pageRequestDTO,category));
 		}
 		//3:new
 		else {
-			model.addAttribute("result",PService.sortNew(pageRequestDTO));
+			model.addAttribute("result",PService.sortNew(pageRequestDTO,category));
 		}
 	}
-
-	@GetMapping("/videocamera")
-	public void videocamera() {
-
-	}
-	
-	@GetMapping("/audio")
-	public void audio() {
-
-	}
-	
-	@GetMapping("/accessory")
-	public void accessory() {
-
-	}
-	
-	
+		
 	@GetMapping("/cart")
 	public void cart() {
 
@@ -134,5 +117,10 @@ public class ProductController {
 		
 		// 카트리스트 불러오고
 		// model.addAttribute("cartList",cartDTOList);
+	}
+	
+	@GetMapping("/search")
+	public void search(PageRequestDTO pageRequestDTO, Model model) {
+		model.addAttribute("result", PService.getListWithKeyword(pageRequestDTO));
 	}
 }

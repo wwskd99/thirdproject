@@ -17,7 +17,6 @@ import org.zerock.sony.product.entity.Image;
 import org.zerock.sony.product.entity.Product;
 import org.zerock.sony.product.repository.ImageRepository;
 import org.zerock.sony.product.repository.ProductRepository;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -63,6 +62,16 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public PageResultDTO<ProductDTO, Object[]> getListWithKeyword(PageRequestDTO pageRequestDTO) {
+		log.info(pageRequestDTO);
+        Function<Object[], ProductDTO> fn = (en -> entityToDTO((Product)en[0],(List<Image>)(Arrays.asList((Image)en[1]))));
+        Page<Object[]> result = repository.search(
+        		pageRequestDTO.getKeyword(), 
+        		pageRequestDTO.getPageable(Sort.by("code").descending()));
+        return new PageResultDTO<>(result, fn);
+	}
+	
+	@Override
 	public ProductDTO findOneProduct(long code) {
 		List<Object[]> result = repository.getProductWithAll(code);
 		if(result.isEmpty()) {
@@ -103,9 +112,9 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public PageResultDTO<ProductDTO, Object[]> sortHigh(PageRequestDTO requestDTO) {
+	public PageResultDTO<ProductDTO, Object[]> sortHigh(PageRequestDTO requestDTO, int category_id) {
 		Pageable pageable = requestDTO.getPageable(Sort.by("price").descending());
-		Page<Object[]> result = repository.findAllWithImage(pageable);
+		Page<Object[]> result = repository.findAllWithImage(pageable, category_id);
 		
 		log.info("==============================================");
         result.getContent().forEach(arr -> {
@@ -122,9 +131,9 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public PageResultDTO<ProductDTO, Object[]> sortLow(PageRequestDTO requestDTO) {
+	public PageResultDTO<ProductDTO, Object[]> sortLow(PageRequestDTO requestDTO, int category_id) {
 		Pageable pageable = requestDTO.getPageable(Sort.by("price").ascending());
-		Page<Object[]> result = repository.findAllWithImage(pageable);
+		Page<Object[]> result = repository.findAllWithImage(pageable, category_id);
 		
 		log.info("==============================================");
         result.getContent().forEach(arr -> {
@@ -141,9 +150,9 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public PageResultDTO<ProductDTO, Object[]> sortNew(PageRequestDTO requestDTO) {
+	public PageResultDTO<ProductDTO, Object[]> sortNew(PageRequestDTO requestDTO, int category_id) {
 		Pageable pageable = requestDTO.getPageable(Sort.by("code").descending());
-		Page<Object[]> result = repository.findAllWithImage(pageable);
+		Page<Object[]> result = repository.findAllWithImage(pageable, category_id);
 		
 		log.info("==============================================");
         result.getContent().forEach(arr -> {

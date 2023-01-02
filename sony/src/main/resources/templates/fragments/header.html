@@ -367,17 +367,17 @@ $(function () {
 						<li><a>제품</a>
 							<ul>
 								<li><a
-									href="../product/camera">카메라</a></li>
+									href="../product/cus_list?category=101">카메라</a></li>
 
 								<li><a
-									href="../product/cus_productlist.do?sort=3&category=102">비디오
+									href="../product/cus_list?category=102">비디오
 										카메라</a></li>
 
 								<li><a
-									href="../product/cus_productlist.do?sort=3&category=103">오디오</a></li>
+									href="../product/cus_list?category=103">오디오</a></li>
 
 								<li><a
-									href="../product/cus_productlist.do?sort=3&category=104">액세서리</a></li>
+									href="../product/cus_list?category=104">액세서리</a></li>
 							</ul></li>
 						<li><a href="#">멤버십</a>
 							<ul>
@@ -396,13 +396,12 @@ $(function () {
 					<div id="modal" class="search">
 						<div class="search_inner">
 							<div class="search_field">
-								<form method="get" action="../products/search">
+								<form method="get" action="../product/search">
 
 									<fieldset>
 										<legend>검색</legend>
 										<input class="search_input" type="text"
-											placeholder="검색어 입력(특수문자 제외)" title="검색어 입력" maxlength="50"
-											value>
+											placeholder="검색어 입력(특수문자 제외)" name="keyword" th:value="${pageRequestDTO.keyword}" title="검색어 입력" maxlength="50">
 
 										<button class="btn_search_submit" type="submit">
 											<img src="../images/search.png" alt="">
