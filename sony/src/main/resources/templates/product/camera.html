@@ -7,7 +7,7 @@
 
 	</th:block>
 </th:block>
-
+<link rel="stylesheet" href="../css/productList.css">
 <head>
 <meta charset="UTF-8">
 <style>
@@ -26,6 +26,213 @@
 	text-align: center;
 }
 </style>
+<script>
+	function SortPriceHigh() {
+
+		$.ajax({
+			url : "camera",
+			type : "post",
+			data : {
+				sort : "1"
+			},
+			success : function(list) {
+				var e = $(list).find('#product_body');
+				
+				$("#product_body").html(e);
+				
+			},
+			error : function() {
+			}
+		});
+	}
+
+	function SortPriceLow() {
+
+		$.ajax({
+			url : "camera",
+			type : "post",
+			data : {
+				sort : "2"
+			},
+			success : function(list) {
+				var e = $(list).find('#product_body');
+				
+				$("#product_body").html(e);
+			
+				
+		
+			},
+			error : function() {
+
+			}
+		});
+	}
+
+	function SortNew() {
+
+		$.ajax({
+			url : "camera",
+			type : "post",
+			data : {
+				sort : "3"
+			},
+			success : function(list) {
+				var e = $(list).find('#product_body');
+			
+				$("#product_body").html(e);
+				
+				
+			},
+			error : function() {
+
+			}
+		});
+	}
+	
+	function topImg() {
+		
+		  var category = [[${category}]];
+		  var topImg;
+		  if ("101" == category || "10101" == category || "10102" == category){
+			  topImg = '../images/bg_cat_camera.jpg'
+		  }else if ("102" == category || "10201" == category || "10202" == category){
+			  topImg = '../images/video_camera.jpg'			  
+		  }else if ("103" == category || "10301" == category || "10302" == category){
+			  topImg = '../images/audio.jpg'
+		  }else if ("104" == category){
+			  topImg = '../images/acc.jpg'
+		  }
+		  
+		  return topImg;
+		
+	}
+	
+	function topImgTwo() {
+		
+		  var category = [[${category}]];
+		  var topImg2;
+		  if ("101" == category || "10101" == category || "10102" == category){
+			  topImg2 = '../images/m-category-cam-01.png'
+		  }else if ("102" == category || "10201" == category || "10202" == category){
+			  topImg2 = '../images/cinema_line_camera.png'			  
+		  }else if ("103" == category || "10301" == category || "10302" == category){
+			  topImg2 = '../images/headphone.png'
+		  }else if ("104" == category){
+			  topImg2 = '../images/camera_acc.png'
+		  }
+		  
+		  return topImg2;
+		
+	}
+	
+	function topImgThree() {
+		
+		  var category = [[${category}]];
+		  var topImg3;
+		  if ("101" == category || "10101" == category || "10102" == category){
+			  topImg3 = '../images/m-category-cam-02.png'
+		  }else if ("102" == category || "10201" == category || "10202" == category){
+			  topImg3 = '../images/camcoder.png'			  
+		  }else if ("103" == category || "10301" == category || "10302" == category){
+			  topImg3 = '../images/speaker.png'
+		  }else if ("104" == category){
+			  topImg3 = '../images/audio_acc.png'
+		  }
+		  
+		  return topImg3;
+		
+	}
+	
+	function topSpan() {
+		
+		var category = [[${category}]];
+		  if ("101" == category || "10101" == category || "10102" == category){
+			  document.getElementById('top_span').innerHTML = "카메라";
+		  }else if ("102" == category || "10201" == category || "10202" == category){
+			  document.getElementById('top_span').innerHTML = "비디오 카메라";		  
+		  }else if ("103" == category || "10301" == category || "10302" == category){
+			  document.getElementById('top_span').innerHTML = "오디오";
+		  }else if ("104" == category){
+			  document.getElementById('top_span').innerHTML = "액세서리";
+		  }
+	  }	
+function topSpanTwo() {
+		
+		var category = [[${category}]];
+		  if ("101" == category || "10101" == category || "10102" == category){
+			  document.getElementById('top_span2').innerHTML = "렌즈교환식 카메라";
+		  }else if ("102" == category || "10201" == category || "10202" == category){
+			  document.getElementById('top_span2').innerHTML = "시네마 라인 카메라";		  
+		  }else if ("103" == category || "10301" == category || "10302" == category){
+			  document.getElementById('top_span2').innerHTML = "헤드폰/이어폰/워크맨";
+		  }else if ("104" == category){
+			  document.getElementById('top_span2').innerHTML = "카메라 액세서리";
+		  }
+	  }	
+function topSpanThree() {
+	
+	var category = [[${category}]];
+	  if ("101" == category || "10101" == category || "10102" == category){
+		  document.getElementById('top_span3').innerHTML = "컴팩트 카메라";
+	  }else if ("102" == category){
+		  document.getElementById('top_span3').innerHTML = "캠코더";		  
+	  }else if ("103" == category){
+		  document.getElementById('top_span3').innerHTML = "스피커";
+	  }else if ("104" == category){
+		  document.getElementById('top_span3').innerHTML = "오디오 액세서리";
+	  }
+  }	
+	
+function allClick(){
+	var category = [[${category}]];
+	 var allLink;
+	 if ("101" == category || "10101" == category || "10102" == category){
+		  allLink = "cus_productlist.do?sort=3&category=101"
+	  }else if ("102" == category || "10201" == category || "10202" == category){
+		  allLink = "cus_productlist.do?sort=3&category=102"  
+	  }else if ("103" == category || "10301" == category || "10302" == category){
+		  allLink = "cus_productlist.do?sort=3&category=103"
+	  }else if ("104" == category){
+		  allLink = "cus_productlist.do?sort=3&category=104"
+	  }
+	
+	return allLink;
+	
+}
+function categoryOne(){
+	var category = [[${category}]];
+	 var categoryOne;
+	 if ("101" == category || "10101" == category || "10102" == category){
+		 categoryOne = "cus_productlist.do?sort=3&category=10101"
+	  }else if ("102" == category || "10201" == category || "10202" == category){
+		  categoryOne = "cus_productlist.do?sort=3&category=10201"  
+	  }else if ("103" == category || "10301" == category || "10302" == category){
+		  categoryOne = "cus_productlist.do?sort=3&category=10301"
+	  }else if ("104" == category){
+		  categoryOne = "cus_productlist.do?sort=3&category=104"
+	  }
+	
+	return categoryOne;
+	
+}
+function categoryTwo(){
+	var category = [[${category}]];
+	 var categoryTwo;
+	 if ("101" == category || "10101" == category || "10102" == category){
+		 categoryOne = "cus_productlist.do?sort=3&category=10102"
+	  }else if ("102" == category || "10201" == category || "10202" == category){
+		  categoryOne = "cus_productlist.do?sort=3&category=10202"  
+	  }else if ("103" == category || "10301" == category || "10302" == category){
+		  categoryOne = "cus_productlist.do?sort=3&category=10302"
+	  }else if ("104" == category){
+		  categoryOne = "cus_productlist.do?sort=3&category=104"
+	  }
+	
+	return categoryOne;
+	
+}
+	
+</script>
 <title>상품 목록</title>
 </head>
 <body>
@@ -84,16 +291,26 @@
 					</div>
 				</div>
 				<div id="product_body">
-					<div id="product_body_items">
-						<div id="product_body_pic">
-							<a href="cus_productview.do?code=${pro.code}"> <img
-								src="../${pro.pictureurl}" />
-							</a>
-						</div>
-						<div id="product_sul">
-							<a id="items1" href="cus_productview.do?code=${pro.code}"><strong>${pro.name}</strong></a>
-							<a id="items2" href="cus_productview.do?code=${pro.code}">${pro.description}</a>
-							<a id="items3" href="cus_productview.do?code=${pro.code}">${pro.price}</a>
+			
+			
+					<div th:each="pro : ${result.dtoList}">
+						<div id="product_body_items">
+							<div id="product_body_pic">
+								<a th:href="@{/product/view(code=${pro.code})}">
+									<div th:if="${pro.imageDTOList[0] != null}">
+										<img th:src="@{/display?fileName=}+${pro.imageDTOList[0].getImageURL()}">
+									</div>
+									<div th:if="${pro.imageDTOList[0] == null}">
+										사진 없음
+									</div>
+								</a>
+							</div>
+							<div id="product_sul">
+								<a id="items1" th:href="@{/product/view(code=${pro.code})}"><strong>[[${pro.name}]]</strong></a>
+								<a id="items2" th:href="@{/product/view(code=${pro.code})}">[[${pro.description}]]</a>
+								<a id="items3" th:href="@{/product/view(code=${pro.code})}">[[${pro.price}]]</a>
+								
+							</div>
 						</div>
 					</div>
 				</div>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.zerock.sony.member.dto.MemberDTO;
 import org.zerock.sony.member.entity.Member;
+import org.zerock.sony.product.entity.Category;
 
 public interface MemberService {
 	void register(MemberDTO dto);
@@ -11,6 +12,7 @@ public interface MemberService {
 	MemberDTO memberLogin(String userid, String pwd);
 	MemberDTO FindMember(String userid, boolean social);
 	List<MemberDTO> FindAllMember();
+//	Category setCategoryName(int id);
 	
 	// DTO -> Entity
     default Member dtoToEntity(MemberDTO dto){

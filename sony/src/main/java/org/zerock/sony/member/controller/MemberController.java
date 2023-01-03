@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.sony.member.dto.MemberDTO;
-import org.zerock.sony.member.entity.Member;
 import org.zerock.sony.member.service.MemberService;
 import org.zerock.sony.security.dto.AuthMemberDTO;
 
@@ -82,9 +81,11 @@ public class MemberController {
 	@GetMapping("/grant")
 	public void grant(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, Model model) {
 		List<MemberDTO> memberDTO = MService.FindAllMember();
+		log.info(authmemberDTO.getUserid());
+		log.info(memberDTO);
 		
 		model.addAttribute("result", memberDTO);
-		model.addAttribute("userid", authmemberDTO.getUserid());
+		model.addAttribute("user_id", authmemberDTO.getUserid());
 	}
 	
 	@PostMapping("/grant")

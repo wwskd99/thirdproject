@@ -2,11 +2,69 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>accessory</title>
+<title>카트</title>
+<style>
+#buybutton {
+	width: 80px;
+	height: 40px;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom: 3px solid black;
+}
+</style>
+<script></script>
+<link rel="stylesheet" href="../css/productList.css">
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script>
+	function deleteProduct() {
+		var chk_obj = document.getElementsByName("rowCheck");
+		var chk_leng = chk_obj.length;
+		var checked = 0;
+		for (i = 0; i < chk_leng; i++) {
+			if (chk_obj[i].checked == true) {
+				checked += 1;
+			}
+		}
+		if (checked > 0) {
+			document.db.action = "cart_delete";
+			document.db.submit();
+		} else if (checked < 1) {
+			alert("한 개이상의 항목을 선택해주세요.");
+		}
+	}
+
+	function buyProduct() {
+		var chk_obj = document.getElementsByName("rowCheck");
+		var chk_leng = chk_obj.length;
+		var checked = 0;
+		for (i = 0; i < chk_leng; i++) {
+			if (chk_obj[i].checked == true) {
+				checked += 1;
+			}
+		}
+		if (checked > 0) {
+			document.db.action = "buy";
+			document.db.submit();
+		} else if (checked < 1) {
+			alert("한 개이상의 항목을 선택해주세요.");
+		}
+
+	}
+	$(document).ready(function() {
+		$("#cart_checkbox").click(function() {
+			if ($("#cart_checkbox").prop("checked")) {
+				$("input[id=rowcheck_button]").prop("checked", true);
+			} else {
+				$("input[id=rowcheck_button]").prop("checked", false);
+			}
+		})
+	})
+</script>
 </head>
 <body>
-<main>
-	<div id="cart_wrap" align="center">
+	<main>
+		<div id="cart_wrap" align="center">
 			<div id="cart_top_wrap">
 				<h1>장바구니</h1>
 				<div id="cart_top_icon">
@@ -21,6 +79,8 @@
 					</div>
 				</div>
 			</div>
+
+
 			<div id="cart_center_wrap">
 				<form method="get" name="db">
 					<div id="cart_center_top">
@@ -48,35 +108,36 @@
 							<div id="cart_center_sul_sum">
 								<span>합계</span>
 							</div>
-						<div id="cart_center_sul_delete"></div>
+							<div id="cart_center_sul_delete"></div>
 						</div>
 						<div id="cart_center_list">
-							<c:forEach var="ca" items="${cart}">
+							<div th:each="cart : ${cartList}">
 								<div id="cart_center_list_check">
 									<input id="rowcheck_button" type="checkbox" name="rowCheck"
-										value="${ca.cart_id}">
+										value="${cart.cart_id}">
 								</div>
-								<div id="cart_center_list_img">
+								<!--  								<div id="cart_center_list_img">
 									<img id="cartline_img" src="../${ca.pictureurl}">
-								</div>
+								</div>	-->
 								<div id="cart_center_list_name">
-									<span>${ca.name}</span>
+									<span>${cart.name}</span>
 								</div>
 								<div id="cart_center_list_price">
-									<span>${ca.price} 원</span>
+									<span>${cart.price} 원</span>
 								</div>
 								<div id="cart_center_list_amount">
-									<span>${ca.amount}</span>
+									<span>${cart.amount}</span>
 								</div>
 								<div id="cart_center_list_sum">
-								
-									<span>${ca.amount*ca.price} 원</span>
+
+									<span>${cart.amount*cart.price} 원</span>
 								</div>
 								<div id="cart_center_list_delete">
 									<input id="delete_button" type="button" value="삭제"
-										onClick="location.href='cus_delete.do?rowCheck=${ca.cart_id}'">
+										onClick="location.href='cus_delete.do?rowCheck=${cart.cart_id}'">
 								</div>
-							</c:forEach>
+
+							</div>
 						</div>
 					</div>
 					<div id="cart_center_bottom">

@@ -1,6 +1,8 @@
 package org.zerock.sony.product.dto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,12 +16,15 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDTO {
-	private Long code;
+	private long code;
 	private String name;
 	private int price;
-	private String pictureUrl;
+	
+	@Builder.Default
+    private List<ImageDTO> imageDTOList = new ArrayList<>();
+	
 	private String description;
-	private int category;
+	private CategoryDTO category;
 	private int stock;
 	private LocalDateTime regDate, modDate;
 }
