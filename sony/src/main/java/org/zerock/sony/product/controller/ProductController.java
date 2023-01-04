@@ -59,7 +59,7 @@ public class ProductController {
 	}
 		
 	@GetMapping("/cart")
-	public void cart() {
+	public void cart(PageRequestDTO pageRequestDTO) {
 
 	}
 	
@@ -71,7 +71,7 @@ public class ProductController {
 	}
 	
 	@GetMapping("/write")
-	public void write() {
+	public void write(PageRequestDTO pageRequestDTO) {
 
 	}
 	
@@ -84,7 +84,7 @@ public class ProductController {
 	}
 	
 	@GetMapping("/update")
-	public void update(long code, Model model) {
+	public void update(long code, Model model, PageRequestDTO pageRequestDTO) {
 		ProductDTO productDTO = PService.findOneProduct(code);
 		log.info(productDTO);
 		model.addAttribute("product", productDTO);
@@ -103,18 +103,25 @@ public class ProductController {
 	}
 	
 	@GetMapping("/view")
-	public void view(long code, Model model) {
+	public void view(long code, Model model,@AuthenticationPrincipal AuthMemberDTO authmemberDTO, PageRequestDTO pageRequestDTO) {
+		if(authmemberDTO == null) {
+			model.addAttribute("Authmember","");
+		} else {
+			model.addAttribute("Authmember",authmemberDTO.getUserid());
+		}
 		model.addAttribute("product", PService.findOneProduct(code));
 	}
 	
 	@PostMapping("/cart")
 	public void cartPush(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, long code, int amount, Model model) {
-		CartDTO cartDTO = new CartDTO();
-		cartDTO.setAmount(amount);
-		cartDTO.setBuyer(MService.FindMember(authmemberDTO.getUserid(), authmemberDTO.isFromSocial()));
-		cartDTO.setProduct(PService.findOneProduct(code));
-		cartService.insert(cartDTO);
-		
+		if(authmemberDTO == null) {
+		} else {
+			CartDTO cartDTO = new CartDTO();
+			cartDTO.setAmount(amount);
+			cartDTO.setBuyer(MService.FindMember(authmemberDTO.getUserid(), authmemberDTO.isFromSocial()));
+			cartDTO.setProduct(PService.findOneProduct(code));
+			cartService.insert(cartDTO);
+		}
 		// 카트리스트 불러오고
 		// model.addAttribute("cartList",cartDTOList);
 	}

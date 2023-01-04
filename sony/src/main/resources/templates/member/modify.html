@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{./fragments/header::setContent(~{this::content})}">
+	<th:block th:fragment="content">
+
+	</th:block>
+</th:block>
 <head>
 <meta charset="UTF-8">
 <title>회원정보 수정 폼</title>
@@ -180,4 +185,10 @@ tr {
 		</div>
 	</main>
 </body>
+<th:block
+	th:replace="~{./fragments/footer::setContent(~{this::content})}">
+	<th:block th:fragment="content">
+
+	</th:block>
+</th:block>
 </html>

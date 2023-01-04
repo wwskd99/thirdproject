@@ -1,0 +1,63 @@
+h1 {
+	width: 250px;
+	height: 150px;
+	font-weight: bold;
+	color: black; /* 글 색상 */
+	background: white;
+	display: flex;
+	align-items: center;
+	justify-content : center;	
+	margin: 0 auto;
+}
+
+table {
+	
+	width: 80%;
+	border-collapse: collapse;
+	font-size: 18px; /* 글꼴 크기 */
+	line-height: 24px; /* 줄 간격 */
+}
+
+table td,th {
+	/*border: #d3d3d3 solid 1px; /* 경계선 색상 스타일 굵기 */
+	border-top: #d3d3d3 solid 1px;
+	border-bottom: #d3d3d3 solid 1px;
+	font-weight: bold;
+	padding: 5px; /* 안쪽 여백 */
+}
+th {
+	background: rgb(230, 230, 230) /* 배경색 */
+}
+td {
+	text-align: center;
+}
+.num{
+	width: 10%;
+}
+.title{
+	width: 50%;
+	text-align: left;
+}
+.date{
+	width: 30%;
+	color: gray;
+}
+.count{
+	width: 10%;
+	color: gray;
+}
+img {
+	width: 100px; /* 이미지 너비(가로) */
+	height: 100px; /* 이미지 높이(세로) */
+}
+
+a {
+	text-decoration: none; /* 링크 밑줄 없애기 */
+	color: black; /* 글 색상 */
+}
+
+a:HOVER {
+	text-decoration: underline; /* 밑줄 */
+	color: black; /* 글 색상 */
+}
+

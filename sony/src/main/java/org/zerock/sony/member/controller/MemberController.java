@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.zerock.common.dto.PageRequestDTO;
 import org.zerock.sony.member.dto.MemberDTO;
 import org.zerock.sony.member.service.MemberService;
 import org.zerock.sony.security.dto.AuthMemberDTO;
@@ -27,12 +28,12 @@ public class MemberController {
 	private final PasswordEncoder passwordEncoder;
     
 	@GetMapping("/login")
-	public void login(){
+	public void login(PageRequestDTO pageRequestDTO){
 
 	}
 	
 	@GetMapping("/join")
-	public void join() {
+	public void join(PageRequestDTO pageRequestDTO) {
 		
 	}
 	
@@ -54,13 +55,13 @@ public class MemberController {
 	}
 	
 	@GetMapping("/loginPage")
-	public void loginPage(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, Model model) {
+	public void loginPage(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, Model model, PageRequestDTO pageRequestDTO) {
 		log.info(authmemberDTO);
 		 model.addAttribute("member", authmemberDTO);
 	}
 	
 	@GetMapping("/modify")
-	public void modify(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, Model model) {
+	public void modify(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, Model model, PageRequestDTO pageRequestDTO) {
 		MemberDTO memberDTO = MService.FindMember(authmemberDTO.getUserid(), authmemberDTO.isFromSocial());
 		model.addAttribute("member", memberDTO);
 	}
@@ -79,7 +80,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("/grant")
-	public void grant(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, Model model) {
+	public void grant(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, Model model, PageRequestDTO pageRequestDTO) {
 		List<MemberDTO> memberDTO = MService.FindAllMember();
 		log.info(authmemberDTO.getUserid());
 		log.info(memberDTO);

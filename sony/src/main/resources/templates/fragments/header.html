@@ -156,7 +156,7 @@ a {
 	margin: 0;
 }
 
-#modal.search {
+#search_modal.search {
 	display: none;
 	position: absolute;
 	z-index: 121;
@@ -393,7 +393,7 @@ $(function () {
 					</button>
 
 					<!-- 모달 -->
-					<div id="modal" class="search">
+					<div id="search_modal" class="search">
 						<div class="search_inner">
 							<div class="search_field">
 								<form method="get" action="../product/search">
@@ -469,23 +469,23 @@ $(function () {
 					</div>
 					<!--  -->
 					<script type="text/javascript">				
-				const modal = document.getElementById("modal")
+				const search_modal = document.getElementById("search_modal")
 				
 				const btnMoSearch = document.getElementById("btn_mo_search")
 				btnMoSearch.addEventListener("click", e => {
-				    $("#modal.search").css('display','flex').hide().fadeIn();
+				    $("#search_modal.search").css('display','flex').hide().fadeIn();
 				})
-				const closeBtn = modal.querySelector(".search_btn_close")
+				const closeBtn = search_modal.querySelector(".search_btn_close")
 				closeBtn.addEventListener("click", e => {
-				    modal.style.display = "none"
+				    search_modal.style.display = "none"
 				})
 				
 				$(function(){
 					$("btn_mo_search").on("click", function(){
-						$("modal").fadeIn(5000);
+						$("search_modal").fadeIn(5000);
 					});
 						$("search_btn_close").on("click", function(){
-						$("modal").fadeOut(5000);
+						$("search_modal").fadeOut(5000);
 					});
 				});
 				

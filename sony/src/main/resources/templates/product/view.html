@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{./fragments/header::setContent(~{this::content})}">
+	<th:block th:fragment="content">
+
+	</th:block>
+</th:block>
 <head>
 <meta charset="UTF-8">
 <title>dd</title>
@@ -30,6 +35,9 @@ function amountMinus(){
 function cartCheck(){ 
 	if(document.getElementById("amounttext").value < 1){
 		alert ("상품을 한개 이상 넣어주십시오")
+	}else if("[[${Authmember}]]" == ""){
+		alert ("로그인 정보가 필요합니다.")
+		window.location.href="../member/login";
 	}else{
     	var value = $("form[name=cb]").serialize() ;
   
@@ -104,4 +112,10 @@ function cartCheck(){
 		</div>
 	</main>
 </body>
+<th:block
+	th:replace="~{./fragments/footer::setContent(~{this::content})}">
+	<th:block th:fragment="content">
+
+	</th:block>
+</th:block>
 </html>
