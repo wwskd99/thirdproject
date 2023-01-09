@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{./fragments/header::setContent(~{this::content})}">
+	<th:block th:fragment="content">
+
+	</th:block>
+</th:block>
 <head>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <meta charset="UTF-8">
@@ -183,4 +188,10 @@
 	</div>
 </main>
 </body>
+<th:block
+	th:replace="~{./fragments/footer::setContent(~{this::content})}">
+	<th:block th:fragment="content">
+
+	</th:block>
+</th:block>
 </html>

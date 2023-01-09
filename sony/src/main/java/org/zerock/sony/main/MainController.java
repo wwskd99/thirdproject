@@ -19,11 +19,6 @@ public class MainController {
 	public void home(PageRequestDTO pageRequestDTO, Model model) {
 		
 	}
-	
-	@GetMapping("/test")
-	public void footertest() {
-		
-	}
 }
 
 

@@ -12,8 +12,11 @@ import org.springframework.data.repository.query.Param;
 import org.zerock.sony.product.entity.Cart;
 
 public interface CartRepository extends JpaRepository<Cart, Long> {
-	@Query("SELECT c, b from Cart c left Outer join c.buyer b where b.userid = :userid")
+	@Query("SELECT c, b, i from Cart c left Outer join c.buyer b, Image i where b.userid = :userid and i.product = c.product group by c")
 	List<Object[]> getCartWithBuyer(@Param("userid") String userid);
+	
+	@Query("SELECT c, b, i from Cart c left Outer join c.buyer b, Image i where c.cart_id = :cart_id and i.product = c.product")
+	List<Object[]> getCartWithId(@Param("cart_id") long cart_id);
 	
 	@Query(value = "SELECT c, b, p" +
 			" FROM Cart c " +

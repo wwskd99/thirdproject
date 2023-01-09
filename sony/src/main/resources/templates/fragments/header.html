@@ -24,11 +24,12 @@
 }
 
 .logo {
-	flex: 1;
+	
 	width: 7%;
 	height: 100px;
-	margin-right: 15%;
-	float: left;
+	position: absolute;
+	left: 2%;
+	margin-left: -1%;
 }
 
 .menu {
@@ -37,13 +38,18 @@
 	float: left;
 	width: 65%;
 	height: 100px;
+	text-align: center;
 }
 
 .menu ul {
 	height: 100px;
-	margin:0;
-    padding:0;
-    list-style:none;
+	list-style: none;
+	margin: 0;
+	margin-left: 20px;
+	padding: 0;
+	display: flex;
+    justify-content: center;
+	
 }
 
 .menu li {
@@ -76,6 +82,7 @@
 	border: 0px;
 	position: absolute;
 	width: 200px;
+	margin-left: -20px;
 	z-index: 200;
 }
 
@@ -115,10 +122,11 @@
 }
 
 .usermenu {
-	float: right;
-	width: 10%;
-	height: 90px;
-	padding-top: 10px;
+	position: absolute;
+    width: 15%;
+    height: 75px;
+    padding-top: 10px;
+    right: -0.5%;
 }
 
 .usermenu img {
@@ -155,7 +163,7 @@ a {
 	margin: 0;
 }
 
-#search_search_modal.search {
+#search_modal.search {
 	display: none;
 	position: absolute;
 	z-index: 121;
@@ -357,6 +365,81 @@ $(function () {
 	<body>
 		<header>
 			<div class="parent">
+			<!-- 모달 -->
+				<div id="search_modal" class="search">
+					<div class="search_inner">
+						<div class="search_field">
+							<form method="get" action="../product/search">
+								<fieldset>
+									<legend>검색</legend>
+									<input class="search_input" type="text"
+										placeholder="검색어 입력(특수문자 제외)" name="keyword" th:value="${pageRequestDTO.keyword}" title="검색어 입력" maxlength="50">
+									<button class="btn_search_submit" type="submit">
+										<img src="../images/search.png" alt="">
+									</button>
+								</fieldset>
+							</form>
+						</div>
+						<div class="search_keyword">
+							<div>
+								<h3 class="search_title">인기검색어</h3>
+							</div>
+							<div class="keyword_item_list">
+								<a class="keyword_item" href="poducts-view/.."
+									style="color: white"># 물건1</a> <a class="keyword_item"
+									href="poducts-view/.." style="color: white"># 물건2</a> <a
+									class="keyword_item" href="poducts-view/.."
+									style="color: white"># 물건3</a>
+							</div>
+						</div>
+						<div class="search_recomm">
+							<div>
+								<h3 class="recomm_title">추천 제품</h3>
+							</div>
+							<div class="recomm_wrapper">
+								<ul class="recomm_item_list">
+									<li class="reomm_item">
+										<a href="products-view/..">
+											<div class="search_recomm_pic">
+												<img src=""> 
+												<span class="badge_text" style="color: rgb(255, 78, 0);">NEW</span>
+											</div>
+											<div class="search_recomm_wrapper">
+												<span class="recomm_name">카메라1</span>
+												<p class="recomm_desc">카메라1 설명</p>
+											</div>
+										</a>
+									</li>
+									<li class="reomm_item">
+										<a href="products-view/..">
+											<div class="search_recomm_pic">
+												<img src=""> <span class="badge_text" style="color: rgb(255, 78, 0);">NEW</span>
+											</div>
+											<div class="search_recomm_wrapper">
+												<span class="recomm_name">카메라2</span>
+												<p class="recomm_desc">카메라1 설명</p>
+											</div>
+										</a>
+									</li>
+									<li class="reomm_item">
+										<a href="products-view/..">
+											<div class="search_recomm_pic">
+												<img src=""> <span class="badge_text" style="color: rgb(255, 78, 0);">event</span>
+											</div>
+											<div class="search_recomm_wrapper">
+												<span class="recomm_name">카메라3</span>
+												<p class="recomm_desc">카메라1 설명</p>
+											</div>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<button class="search_btn_close">
+							<img src="" alt="검색창 닫기">
+						</button>
+					</div>
+				</div>
 				<div class='logo'>
 					<a href="../main/home"> <img src="../images/sony.svg" />
 					</a>
@@ -387,112 +470,30 @@ $(function () {
 					</ul>
 				</div>
 				<div class='usermenu'>
-					<button id="btn_mo_search">
-						<img src="../images/search.png" alt="검색창 열기">
-					</button>
-
-					<!-- 모달 -->
-					<div id="search_search_modal" class="search">
-						<div class="search_inner">
-							<div class="search_field">
-
-								<form method="get" action="../product/searchlist">
-
-								<form method="get" action="../product/search">
-
-
-									<fieldset>
-										<legend>검색</legend>
-										<input class="search_input" type="text"
-											placeholder="검색어 입력(특수문자 제외)" name="keyword" th:value="${pageRequestDTO.keyword}" title="검색어 입력" maxlength="50">
-
-										<button class="btn_search_submit" type="submit">
-											<img src="../images/search.png" alt="">
-										</button>
-
-									</fieldset>
-								</form>
-							</div>
-							<div class="search_keyword">
-								<div>
-									<h3 class="search_title">인기검색어</h3>
-								</div>
-								<div class="keyword_item_list">
-									<a class="keyword_item" href="poducts-view/.."
-										style="color: white"># 물건1</a> <a class="keyword_item"
-										href="poducts-view/.." style="color: white"># 물건2</a> <a
-										class="keyword_item" href="poducts-view/.."
-										style="color: white"># 물건3</a>
-								</div>
-							</div>
-
-							<div class="search_recomm">
-								<div>
-									<h3 class="recomm_title">추천 제품</h3>
-								</div>
-								<div class="recomm_wrapper">
-									<ul class="recomm_item_list">
-										<li class="reomm_item"><a href="products-view/..">
-												<div class="search_recomm_pic">
-													<img src=""> <span class="badge_text"
-														style="color: rgb(255, 78, 0);">NEW</span>
-												</div>
-												<div class="search_recomm_wrapper">
-													<span class="recomm_name">카메라1</span>
-													<p class="recomm_desc">카메라1 설명</p>
-												</div>
-										</a></li>
-										<li class="reomm_item"><a href="products-view/..">
-												<div class="search_recomm_pic">
-													<img src=""> <span class="badge_text"
-														style="color: rgb(255, 78, 0);">NEW</span>
-												</div>
-												<div class="search_recomm_wrapper">
-													<span class="recomm_name">카메라2</span>
-													<p class="recomm_desc">카메라1 설명</p>
-												</div>
-										</a></li>
-										<li class="reomm_item"><a href="products-view/..">
-												<div class="search_recomm_pic">
-													<img src=""> <span class="badge_text"
-														style="color: rgb(255, 78, 0);">event</span>
-												</div>
-												<div class="search_recomm_wrapper">
-													<span class="recomm_name">카메라3</span>
-													<p class="recomm_desc">카메라1 설명</p>
-												</div>
-										</a></li>
-									</ul>
-								</div>
-							</div>
-							<button class="search_btn_close">
-								<img src="" alt="검색창 닫기">
-							</button>
-						</div>
+					<div id="menu_right">
+						<button id="btn_mo_search">
+							<img src="../images/search.png" alt="검색창 열기">
+						</button>
 					</div>
 					<!--  -->
 					<script type="text/javascript">				
-				const search_search_modal = document.getElementById("search_search_modal")
+				const search_modal = document.getElementById("search_modal")
 				
 				const btnMoSearch = document.getElementById("btn_mo_search")
 				btnMoSearch.addEventListener("click", e => {
-
-					$("#search_search_modal.search").css('display','flex').hide().fadeIn();
-
-				    $("#search_search_modal.search").css('display','flex').hide().fadeIn();
-
+				    $("#search_modal.search").css('display','flex').hide().fadeIn();
 				})
-				const closeBtn = search_search_modal.querySelector(".search_btn_close")
+				const closeBtn = search_modal.querySelector(".search_btn_close")
 				closeBtn.addEventListener("click", e => {
-					$("#search_search_modal.search").css('display','flex').fadeOut();
+				    search_modal.style.display = "none"
 				})
 				
 				$(function(){
 					$("btn_mo_search").on("click", function(){
-						$("search_search_modal").fadeIn(1000);
+						$("search_modal").fadeIn(5000);
 					});
 						$("search_btn_close").on("click", function(){
-						$("search_search_modal").fadeOut(1000);
+						$("search_modal").fadeOut(5000);
 					});
 				});
 				
@@ -517,7 +518,10 @@ $(function () {
 								<img src="../images/mypage.png" />
 							</a>
 						</div>
-						<a href="../product/cartsession"> <img
+					</div>
+					
+					<div id="menu_right">
+						<a href="../product/cart"> <img
 							src="../images/cart.png" /></a>
 					</div>
 				</div>

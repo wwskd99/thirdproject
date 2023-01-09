@@ -116,11 +116,18 @@
 									<input id="rowcheck_button" type="checkbox" name="rowCheck"
 										th:value="${cart.cart_id}">
 								</div>
-								<!--  								<div id="cart_center_list_img">
-									<img id="cartline_img" src="../${ca.pictureurl}">
-								</div>	-->
+								<div id="cart_center_list_img">
+									<div id = "buy_center_list_img">
+										<div th:if="${cart.product.imageDTOList[0] != null}">
+											<img id="cartline_img" th:src="@{/display?fileName=}+${cart.product.imageDTOList[0].getImageURL()}"> 
+										</div>
+										<div th:if="${cart.product.imageDTOList[0] == null}">
+											사진 없음
+										</div>
+									</div>
+								</div>
 								<div id="cart_center_list_name">
-									<span>[[${cart}]]</span>
+									<span>[[${cart.product.name}]]</span>
 								</div>
 								<div id="cart_center_list_price">
 									<span>[[${cart.product.price}]] 원</span>

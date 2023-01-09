@@ -1,6 +1,7 @@
 package org.zerock.sony.product.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -58,7 +59,6 @@ public class ProductController {
 			model.addAttribute("result",PService.sortNew(pageRequestDTO,category));
 		}
 	}
-		
 
 	@GetMapping("/list")
 	public void list(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, PageRequestDTO pageRequestDTO, Model model) {
@@ -68,7 +68,7 @@ public class ProductController {
 	}
 	
 	@GetMapping("/write")
-	public void write() {
+	public void write(PageRequestDTO pageRequestDTO) {
 
 	}
 	
@@ -81,7 +81,7 @@ public class ProductController {
 	}
 	
 	@GetMapping("/update")
-	public void update(long code, Model model) {
+	public void update(long code, Model model, PageRequestDTO pageRequestDTO) {
 		ProductDTO productDTO = PService.findOneProduct(code);
 		log.info(productDTO);
 		model.addAttribute("product", productDTO);
@@ -100,28 +100,57 @@ public class ProductController {
 	}
 	
 	@GetMapping("/view")
-	public void view(long code, Model model) {
+	public void view(long code, Model model,@AuthenticationPrincipal AuthMemberDTO authmemberDTO, PageRequestDTO pageRequestDTO) {
+		if(authmemberDTO == null) {
+			model.addAttribute("Authmember","");
+		} else {
+			model.addAttribute("Authmember",authmemberDTO.getUserid());
+		}
 		model.addAttribute("product", PService.findOneProduct(code));
 	}
 	
 	@GetMapping("/cart")
 	 public void cart(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, CartDTO cartDTOList, Model model){
         log.info("cartlist..." + cartDTOList);
-        cartService.cartDTO(authmemberDTO.getUserid());
-        model.addAttribute("cartList",cartService.cartDTO(authmemberDTO.getUserid()));
-       
+        model.addAttribute("cartList",cartService.cartDTO(authmemberDTO.getUserid()));     
 	}
 	
 	@PostMapping("/cart")
 	public void cartPush(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, long code, int amount, Model model) {
-		CartDTO cartDTO = new CartDTO();
-		cartDTO.setAmount(amount);
-		cartDTO.setBuyer(MService.FindMember(authmemberDTO.getUserid(), authmemberDTO.isFromSocial()));
-		cartDTO.setProduct(PService.findOneProduct(code));
+		if(authmemberDTO == null) {
+		} else {
+			CartDTO cartDTO = new CartDTO();
+			cartDTO.setAmount(amount);
+			cartDTO.setBuyer(MService.FindMember(authmemberDTO.getUserid(), authmemberDTO.isFromSocial()));
+			cartDTO.setProduct(PService.findOneProduct(code));
+			cartService.insert(cartDTO);
+			model.addAttribute("cartList",cartService.cartDTO(authmemberDTO.getUserid()));
+		}
 	}
 	
 	@GetMapping("/search")
 	public void search(PageRequestDTO pageRequestDTO, Model model) {
 		model.addAttribute("result", PService.getListWithKeyword(pageRequestDTO));
+	}
+	
+	@GetMapping("/buy")
+	public void buy(int rowCheck[], Model model) {
+		List<CartDTO> buylist = new ArrayList<CartDTO>();
+		for(int i=0;i<rowCheck.length;i++) {
+			buylist.add(cartService.getbyId(rowCheck[i]));
+		}
+		log.info(buylist);
+		model.addAttribute("buy", buylist);
+		
+		int c = 0;
+		int d = 0;
+		for(int i = 0; i<buylist.size();i++) {
+			int a = buylist.get(i).getProduct().getPrice();
+			int b = buylist.get(i).getAmount();
+			c += a* b;
+			d += b;
+		}
+		model.addAttribute("sum", c);
+		model.addAttribute("buyAmount", d);
 	}
 }

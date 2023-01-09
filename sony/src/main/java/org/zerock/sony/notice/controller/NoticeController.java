@@ -31,30 +31,38 @@ public class NoticeController {
 	}
 	
 	@GetMapping("/write")
-	public void write() {
+	public void write(PageRequestDTO pageRequestDTO) {
 		
 	}
 	
 	@PostMapping("/write")
-	public String writeNotice(NoticeDTO noticeDTO, Model model) {
+	public String writeNotice(NoticeDTO noticeDTO) {
 		log.info(noticeDTO);
 		NService.register(noticeDTO);
 		return "redirect:/notice/list";
 	}
 	
 	@GetMapping("/read")
-	public void read(int num, Model model, @AuthenticationPrincipal AuthMemberDTO authmemberDTO) {
-		MemberDTO memberDTO = MService.FindMember(authmemberDTO.getUserid(), authmemberDTO.isFromSocial());
-		model.addAttribute("member", memberDTO);
+	public void read(int num, Model model, @AuthenticationPrincipal AuthMemberDTO authmemberDTO, PageRequestDTO pageRequestDTO) {
+		if(authmemberDTO != null) {
+			MemberDTO memberDTO = MService.FindMember(authmemberDTO.getUserid(), authmemberDTO.isFromSocial());
+			model.addAttribute("member", memberDTO);
+		}
 		
 		NoticeDTO dto = NService.read(num);
 		model.addAttribute("notice", dto);		
 	}
 	
 	@GetMapping("/modify")
-	public void modify(int num, Model model) {
+	public void modify(int num, Model model, PageRequestDTO pageRequestDTO) {
 		NoticeDTO dto = NService.read(num);
 		log.info(dto);
 		model.addAttribute("notice", dto);
+	}
+	@PostMapping("/modify")
+	public String modifyNotice(NoticeDTO noticeDTO) {
+		log.info(noticeDTO);
+		NService.register(noticeDTO);
+		return "redirect:/notice/list";
 	}
 }
