@@ -16,9 +16,12 @@ import org.zerock.sony.category.service.CategoryService;
 import org.zerock.sony.member.dto.MemberDTO;
 import org.zerock.sony.member.service.MemberService;
 import org.zerock.sony.product.dto.CartDTO;
+import org.zerock.sony.product.dto.PaymentDTO;
 import org.zerock.sony.product.dto.ProductDTO;
+import org.zerock.sony.product.entity.Payment;
 import org.zerock.sony.product.repository.ImageRepository;
 import org.zerock.sony.product.service.CartService;
+import org.zerock.sony.product.service.PaymentService;
 import org.zerock.sony.product.service.ProductService;
 import org.zerock.sony.security.dto.AuthMemberDTO;
 
@@ -35,6 +38,7 @@ public class ProductController {
 	private final ProductService PService;
 	private final ImageRepository PiService;
 	private final CartService cartService;
+	private final PaymentService payService;
 
 	@GetMapping("/cus_list")
 	public void camera(PageRequestDTO pageRequestDTO, Model model, int category) {
@@ -62,7 +66,7 @@ public class ProductController {
 
 	@GetMapping("/list")
 	public void list(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, PageRequestDTO pageRequestDTO, Model model) {
-		MemberDTO memberDTO = MService.FindMember(authmemberDTO.getUserid(), authmemberDTO.isFromSocial());
+		MemberDTO memberDTO = MService.FindMemberWithSocial(authmemberDTO.getUserid(), authmemberDTO.isFromSocial());
 		model.addAttribute("member", memberDTO);
 		model.addAttribute("productList", PService.getList(pageRequestDTO));
 	}
@@ -121,7 +125,7 @@ public class ProductController {
 		} else {
 			CartDTO cartDTO = new CartDTO();
 			cartDTO.setAmount(amount);
-			cartDTO.setBuyer(MService.FindMember(authmemberDTO.getUserid(), authmemberDTO.isFromSocial()));
+			cartDTO.setBuyer(MService.FindMemberWithSocial(authmemberDTO.getUserid(), authmemberDTO.isFromSocial()));
 			cartDTO.setProduct(PService.findOneProduct(code));
 			cartService.insert(cartDTO);
 			model.addAttribute("cartList",cartService.cartDTO(authmemberDTO.getUserid()));
@@ -152,5 +156,33 @@ public class ProductController {
 		}
 		model.addAttribute("sum", c);
 		model.addAttribute("buyAmount", d);
+	}
+	
+	@PostMapping("/payment")
+	public void payment(PaymentDTO paydto, Model model, String buyer_id[], long cart_id[], long product_code[]) {
+		paydto.setBuyer(MService.FindMember(buyer_id[0]));
+		List<CartDTO> cart = new ArrayList<>();
+		List<ProductDTO> product = new ArrayList<>();
+		for(int i=0; i<cart_id.length; i++) {
+			cart.add(cartService.getbyId(cart_id[i]));
+			product.add(PService.findOneProduct(product_code[i]));
+		}
+		paydto.setCart(cart);
+		paydto.setProduct(product);
+		log.warn(paydto);
+		payService.insert(paydto);
+		// payment_cart 지우고
+		// cart 지움
+	}
+	@GetMapping("/payment")
+	public void paymentsuccess() {
+		
+	}
+	
+	@GetMapping("/cartdelete")
+	public String cartdelte(int rowCheck) {
+		log.info("test: " + rowCheck);
+		// cart삭제(rowCheck)
+		return "redirect:/product/cart";
 	}
 }

@@ -1,9 +1,15 @@
 package org.zerock.sony.product.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.zerock.sony.member.entity.Member;
@@ -19,12 +25,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@ToString
+@ToString(exclude = {"buyer","cart","product"})
 public class Payment {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int delivery_num;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
     private Member buyer;
 	
 	private String del_name;
@@ -36,8 +43,8 @@ public class Payment {
 	private String del_pass;
 	private int post;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Cart cart;
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Product product;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Cart> cart;
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<Product> product;
 }
