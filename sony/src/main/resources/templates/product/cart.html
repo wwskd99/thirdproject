@@ -141,7 +141,7 @@
 								</div>
 								<div id="cart_center_list_delete">
 									<input id="delete_button" type="button" value="삭제"
-										onClick="location.href='cus_delete.do?rowCheck=${cart.cart_id}'">
+										th:onClick="location.href='cartdelete?rowCheck=[[${cart.cart_id}]]'">
 								</div>
 
 							</div>

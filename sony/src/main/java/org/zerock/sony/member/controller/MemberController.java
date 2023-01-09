@@ -62,7 +62,7 @@ public class MemberController {
 	
 	@GetMapping("/modify")
 	public void modify(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, Model model, PageRequestDTO pageRequestDTO) {
-		MemberDTO memberDTO = MService.FindMember(authmemberDTO.getUserid(), authmemberDTO.isFromSocial());
+		MemberDTO memberDTO = MService.FindMemberWithSocial(authmemberDTO.getUserid(), authmemberDTO.isFromSocial());
 		model.addAttribute("member", memberDTO);
 	}
 	
@@ -91,7 +91,7 @@ public class MemberController {
 	
 	@PostMapping("/grant")
 	public String grantuser(@RequestParam("userid") String userid, @RequestParam("grade") int grade, @RequestParam("fromSocial") boolean fromsocial) {
-		MemberDTO member = MService.FindMember(userid, fromsocial);
+		MemberDTO member = MService.FindMemberWithSocial(userid, fromsocial);
 		member.setGrade(grade);
 		MService.modify(member);
 		return "redirect:/member/grant";

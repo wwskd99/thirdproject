@@ -10,7 +10,8 @@ public interface MemberService {
 	void register(MemberDTO dto);
 	void modify(MemberDTO dto);
 	MemberDTO memberLogin(String userid, String pwd);
-	MemberDTO FindMember(String userid, boolean social);
+	MemberDTO FindMemberWithSocial(String userid, boolean social);
+	MemberDTO FindMember(String userid);
 	List<MemberDTO> FindAllMember();
 //	Category setCategoryName(int id);
 	

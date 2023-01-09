@@ -45,7 +45,7 @@ public class NoticeController {
 	@GetMapping("/read")
 	public void read(int num, Model model, @AuthenticationPrincipal AuthMemberDTO authmemberDTO, PageRequestDTO pageRequestDTO) {
 		if(authmemberDTO != null) {
-			MemberDTO memberDTO = MService.FindMember(authmemberDTO.getUserid(), authmemberDTO.isFromSocial());
+			MemberDTO memberDTO = MService.FindMemberWithSocial(authmemberDTO.getUserid(), authmemberDTO.isFromSocial());
 			model.addAttribute("member", memberDTO);
 		}
 		

@@ -51,7 +51,7 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public MemberDTO FindMember(String userid, boolean social) {
+	public MemberDTO FindMemberWithSocial(String userid, boolean social) {
 		Optional<Member> result = repository.findByUserid(userid, social);
 		if(result==null) {
 			return null;
@@ -83,6 +83,17 @@ public class MemberServiceImpl implements MemberService {
 				MemberList.add(entityToDTO(arr));
 			});
 			return MemberList;
+		}
+	}
+
+	@Override
+	public MemberDTO FindMember(String userid) {
+		Optional<Member> result = repository.findByUserid(userid);
+		if(result==null) {
+			return null;
+		} else {
+			MemberDTO memberDTO = entityToDTO(result.get());
+			return memberDTO;
 		}
 	}
 }

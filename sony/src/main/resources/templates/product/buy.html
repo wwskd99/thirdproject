@@ -59,12 +59,11 @@ function paymentSubmit(){
 	var value = $("form[name=info]").serialize() ;
 	
 	$.ajax({
-		url : "success.do",
+		url : "payment",
 		type : "post",
 		data : value,
 		success : function (list){
-
-			window.location.href="paymentSuccess.jsp";
+			window.location.href="payment";
 		},
 			error : function() {
 			
@@ -143,9 +142,11 @@ function paymentSubmit(){
 	
 	
 		<div id = "buy_form_wrap">
-		<form method="post" action="success.do" name="info" accept-charset="utf-8">
+		<form method="post" action="success" name="info" accept-charset="utf-8">
 			<div th:each="bu : ${buy}">
 				<input type="hidden" name="cart_id" th:value="${bu.cart_id}">
+				<input type="hidden" name="buyer_id" th:value="${bu.buyer.userid}">
+				<input type="hidden" name="product_code" th:value="${bu.product.code}">
 			</div>
 			<div id = "buy_form_left">
 			<div id = "order_info">
