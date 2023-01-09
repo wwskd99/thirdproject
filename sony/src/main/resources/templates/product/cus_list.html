@@ -30,10 +30,11 @@
 	function SortPriceHigh() {
 
 		$.ajax({
-			url : "camera",
+			url : "cus_list",
 			type : "post",
 			data : {
-				sort : "1"
+				sort : "1",
+				category : [[${category}]]
 			},
 			success : function(list) {
 				var e = $(list).find('#product_body');
@@ -49,10 +50,11 @@
 	function SortPriceLow() {
 
 		$.ajax({
-			url : "camera",
+			url : "cus_list",
 			type : "post",
 			data : {
-				sort : "2"
+				sort : "2",
+				category : [[${category}]]
 			},
 			success : function(list) {
 				var e = $(list).find('#product_body');
@@ -71,10 +73,11 @@
 	function SortNew() {
 
 		$.ajax({
-			url : "camera",
+			url : "cus_list",
 			type : "post",
 			data : {
-				sort : "3"
+				sort : "3",
+				category : [[${category}]]
 			},
 			success : function(list) {
 				var e = $(list).find('#product_body');
@@ -187,13 +190,13 @@ function allClick(){
 	var category = [[${category}]];
 	 var allLink;
 	 if ("101" == category || "10101" == category || "10102" == category){
-		  allLink = "cus_productlist.do?sort=3&category=101"
+		  allLink = "cus_list?sort=3&category=101"
 	  }else if ("102" == category || "10201" == category || "10202" == category){
-		  allLink = "cus_productlist.do?sort=3&category=102"  
+		  allLink = "cus_list?sort=3&category=102"  
 	  }else if ("103" == category || "10301" == category || "10302" == category){
-		  allLink = "cus_productlist.do?sort=3&category=103"
+		  allLink = "cus_list?sort=3&category=103"
 	  }else if ("104" == category){
-		  allLink = "cus_productlist.do?sort=3&category=104"
+		  allLink = "cus_list?sort=3&category=104"
 	  }
 	
 	return allLink;
@@ -203,13 +206,13 @@ function categoryOne(){
 	var category = [[${category}]];
 	 var categoryOne;
 	 if ("101" == category || "10101" == category || "10102" == category){
-		 categoryOne = "cus_productlist.do?sort=3&category=10101"
+		 categoryOne = "cus_list?sort=3&category=10101"
 	  }else if ("102" == category || "10201" == category || "10202" == category){
-		  categoryOne = "cus_productlist.do?sort=3&category=10201"  
+		  categoryOne = "cus_list?sort=3&category=10201"  
 	  }else if ("103" == category || "10301" == category || "10302" == category){
-		  categoryOne = "cus_productlist.do?sort=3&category=10301"
+		  categoryOne = "cus_list?sort=3&category=10301"
 	  }else if ("104" == category){
-		  categoryOne = "cus_productlist.do?sort=3&category=104"
+		  categoryOne = "cus_list?sort=3&category=104"
 	  }
 	
 	return categoryOne;
@@ -219,13 +222,13 @@ function categoryTwo(){
 	var category = [[${category}]];
 	 var categoryTwo;
 	 if ("101" == category || "10101" == category || "10102" == category){
-		 categoryOne = "cus_productlist.do?sort=3&category=10102"
+		 categoryOne = "cus_list?sort=3&category=10102"
 	  }else if ("102" == category || "10201" == category || "10202" == category){
-		  categoryOne = "cus_productlist.do?sort=3&category=10202"  
+		  categoryOne = "cus_list?sort=3&category=10202"  
 	  }else if ("103" == category || "10301" == category || "10302" == category){
-		  categoryOne = "cus_productlist.do?sort=3&category=10302"
+		  categoryOne = "cus_list?sort=3&category=10302"
 	  }else if ("104" == category){
-		  categoryOne = "cus_productlist.do?sort=3&category=104"
+		  categoryOne = "cus_list?sort=3&category=104"
 	  }
 	
 	return categoryOne;

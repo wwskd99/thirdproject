@@ -1,12 +1,12 @@
 package org.zerock.sony.product.service;
 
-import org.springframework.data.domain.Page;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -15,10 +15,8 @@ import org.zerock.common.dto.PageResultDTO;
 import org.zerock.sony.product.dto.ProductDTO;
 import org.zerock.sony.product.entity.Image;
 import org.zerock.sony.product.entity.Product;
-
 import org.zerock.sony.product.repository.ImageRepository;
 import org.zerock.sony.product.repository.ProductRepository;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -28,19 +26,19 @@ import lombok.extern.log4j.Log4j2;
 public class ProductServiceImpl implements ProductService {
 	private final ProductRepository repository;
 	private final ImageRepository imageRepository;
-
+	
 	@Override
 	public void register(ProductDTO dto) {
 		Map<String, Object> entityMap = dtoToEntity(dto);
 		Product product = (Product) entityMap.get("product");
 		repository.save(product);
-		if (!dto.getImageDTOList().isEmpty()) {
-
+		if(!dto.getImageDTOList().isEmpty()) {
+		
 			List<Image> ImageList = (List<Image>) entityMap.get("imgList");
-
+					
 			ImageList.forEach(Image -> {
 				imageRepository.save(Image);
-			});
+		    });
 		}
 	}
 
@@ -48,35 +46,47 @@ public class ProductServiceImpl implements ProductService {
 	public PageResultDTO<ProductDTO, Object[]> getList(PageRequestDTO requestDTO) {
 		Pageable pageable = requestDTO.getPageable(Sort.by("code").descending());
 		Page<Object[]> result = repository.findAllWithImage(pageable);
-
+		
 		log.info("==============================================");
-		result.getContent().forEach(arr -> {
-			log.info(Arrays.toString(arr));
-		});
-
+        result.getContent().forEach(arr -> {
+            log.info(Arrays.toString(arr));
+        });
+        
 		Function<Object[], ProductDTO> fn = (arr -> entityToDTO(
-
-				(Product) arr[0], (List<Image>) (Arrays.asList((Image) arr[1]))));
+				
+                (Product)arr[0] ,
+                (List<Image>)(Arrays.asList((Image)arr[1])))
+        );
 		log.info(fn.toString());
-		return new PageResultDTO<>(result, fn);
+        return new PageResultDTO<>(result, fn);
 	}
 
 	@Override
+	public PageResultDTO<ProductDTO, Object[]> getListWithKeyword(PageRequestDTO pageRequestDTO) {
+		log.info(pageRequestDTO);
+        Function<Object[], ProductDTO> fn = (en -> entityToDTO((Product)en[0],(List<Image>)(Arrays.asList((Image)en[1]))));
+        Page<Object[]> result = repository.search(
+        		pageRequestDTO.getKeyword(), 
+        		pageRequestDTO.getPageable(Sort.by("code").descending()));
+        return new PageResultDTO<>(result, fn);
+	}
+	
+	@Override
 	public ProductDTO findOneProduct(long code) {
 		List<Object[]> result = repository.getProductWithAll(code);
-		if (result.isEmpty()) {
+		if(result.isEmpty()) {
 			return null;
 		} else {
 			Product product = (Product) result.get(0)[0];
-
+			
 			List<Image> ImageList = new ArrayList<>();
-			result.forEach(arr -> {
-				if ((Image) arr[1] != null) {
-					Image Image = (Image) arr[1];
-					ImageList.add(Image);
-				}
-			});
-			return entityToDTO(product, ImageList);
+	        result.forEach(arr -> {
+	        	if((Image)arr[1] != null) {
+		            Image  Image = (Image)arr[1];
+		            ImageList.add(Image);
+	        	}
+	        });
+	        return entityToDTO(product, ImageList);
 		}
 	}
 
@@ -91,65 +101,71 @@ public class ProductServiceImpl implements ProductService {
 		Map<String, Object> entityMap = dtoToEntity(dto);
 		Product product = (Product) entityMap.get("product");
 		repository.save(product);
-		if (!dto.getImageDTOList().isEmpty()) {
-
+		if(!dto.getImageDTOList().isEmpty()) {
+		
 			List<Image> ImageList = (List<Image>) entityMap.get("imgList");
-
+					
 			ImageList.forEach(Image -> {
 				imageRepository.save(Image);
-			});
+		    });
 		}
 	}
 
 	@Override
-	public PageResultDTO<ProductDTO, Object[]> sortHigh(PageRequestDTO requestDTO) {
+	public PageResultDTO<ProductDTO, Object[]> sortHigh(PageRequestDTO requestDTO, int category_id) {
 		Pageable pageable = requestDTO.getPageable(Sort.by("price").descending());
-		Page<Object[]> result = repository.findAllWithImage(pageable);
-
+		Page<Object[]> result = repository.findAllWithImage(pageable, category_id);
+		
 		log.info("==============================================");
-		result.getContent().forEach(arr -> {
-			log.info(Arrays.toString(arr));
-		});
-
+        result.getContent().forEach(arr -> {
+            log.info(Arrays.toString(arr));
+        });
+        
 		Function<Object[], ProductDTO> fn = (arr -> entityToDTO(
-
-				(Product) arr[0], (List<Image>) (Arrays.asList((Image) arr[1]))));
+				
+                (Product)arr[0] ,
+                (List<Image>)(Arrays.asList((Image)arr[1])))
+        );
 		log.info(fn.toString());
-		return new PageResultDTO<>(result, fn);
+        return new PageResultDTO<>(result, fn);
 	}
-
+	
 	@Override
-	public PageResultDTO<ProductDTO, Object[]> sortLow(PageRequestDTO requestDTO) {
+	public PageResultDTO<ProductDTO, Object[]> sortLow(PageRequestDTO requestDTO, int category_id) {
 		Pageable pageable = requestDTO.getPageable(Sort.by("price").ascending());
-		Page<Object[]> result = repository.findAllWithImage(pageable);
-
+		Page<Object[]> result = repository.findAllWithImage(pageable, category_id);
+		
 		log.info("==============================================");
-		result.getContent().forEach(arr -> {
-			log.info(Arrays.toString(arr));
-		});
-
+        result.getContent().forEach(arr -> {
+            log.info(Arrays.toString(arr));
+        });
+        
 		Function<Object[], ProductDTO> fn = (arr -> entityToDTO(
-
-				(Product) arr[0], (List<Image>) (Arrays.asList((Image) arr[1]))));
+				
+                (Product)arr[0] ,
+                (List<Image>)(Arrays.asList((Image)arr[1])))
+        );
 		log.info(fn.toString());
-		return new PageResultDTO<>(result, fn);
+        return new PageResultDTO<>(result, fn);
 	}
-
+	
 	@Override
-	public PageResultDTO<ProductDTO, Object[]> sortNew(PageRequestDTO requestDTO) {
+	public PageResultDTO<ProductDTO, Object[]> sortNew(PageRequestDTO requestDTO, int category_id) {
 		Pageable pageable = requestDTO.getPageable(Sort.by("code").descending());
-		Page<Object[]> result = repository.findAllWithImage(pageable);
-
+		Page<Object[]> result = repository.findAllWithImage(pageable, category_id);
+		
 		log.info("==============================================");
-		result.getContent().forEach(arr -> {
-			log.info(Arrays.toString(arr));
-		});
-
+        result.getContent().forEach(arr -> {
+            log.info(Arrays.toString(arr));
+        });
+        
 		Function<Object[], ProductDTO> fn = (arr -> entityToDTO(
-
-				(Product) arr[0], (List<Image>) (Arrays.asList((Image) arr[1]))));
+				
+                (Product)arr[0] ,
+                (List<Image>)(Arrays.asList((Image)arr[1])))
+        );
 		log.info(fn.toString());
-		return new PageResultDTO<>(result, fn);
+        return new PageResultDTO<>(result, fn);
 	}
 
 }

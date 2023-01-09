@@ -155,7 +155,7 @@ a {
 	margin: 0;
 }
 
-#modal.search {
+#search_search_modal.search {
 	display: none;
 	position: absolute;
 	z-index: 121;
@@ -366,17 +366,17 @@ $(function () {
 						<li><a>제품</a>
 							<ul>
 								<li><a
-									href="../product/camera">카메라</a></li>
+									href="../product/cus_list?category=101">카메라</a></li>
 
 								<li><a
-									href="../product/cus_productlist.do?sort=3&category=102">비디오
+									href="../product/cus_list?category=102">비디오
 										카메라</a></li>
 
 								<li><a
-									href="../product/cus_productlist.do?sort=3&category=103">오디오</a></li>
+									href="../product/cus_list?category=103">오디오</a></li>
 
 								<li><a
-									href="../product/cus_productlist.do?sort=3&category=104">액세서리</a></li>
+									href="../product/cus_list?category=104">액세서리</a></li>
 							</ul></li>
 						<li><a href="#">멤버십</a>
 							<ul>
@@ -392,16 +392,19 @@ $(function () {
 					</button>
 
 					<!-- 모달 -->
-					<div id="modal" class="search">
+					<div id="search_search_modal" class="search">
 						<div class="search_inner">
 							<div class="search_field">
+
 								<form method="get" action="../product/searchlist">
+
+								<form method="get" action="../product/search">
+
 
 									<fieldset>
 										<legend>검색</legend>
 										<input class="search_input" type="text"
-											placeholder="검색어 입력(특수문자 제외)" title="검색어 입력" maxlength="50"
-											value>
+											placeholder="검색어 입력(특수문자 제외)" name="keyword" th:value="${pageRequestDTO.keyword}" title="검색어 입력" maxlength="50">
 
 										<button class="btn_search_submit" type="submit">
 											<img src="../images/search.png" alt="">
@@ -469,27 +472,27 @@ $(function () {
 					</div>
 					<!--  -->
 					<script type="text/javascript">				
-				const modal = document.getElementById("modal")
+				const search_search_modal = document.getElementById("search_search_modal")
 				
 				const btnMoSearch = document.getElementById("btn_mo_search")
 				btnMoSearch.addEventListener("click", e => {
 
-					$("#modal.search").css('display','flex').hide().fadeIn();
+					$("#search_search_modal.search").css('display','flex').hide().fadeIn();
 
-				    $("#modal.search").css('display','flex').hide().fadeIn();
+				    $("#search_search_modal.search").css('display','flex').hide().fadeIn();
 
 				})
-				const closeBtn = modal.querySelector(".search_btn_close")
+				const closeBtn = search_search_modal.querySelector(".search_btn_close")
 				closeBtn.addEventListener("click", e => {
-					$("#modal.search").css('display','flex').fadeOut();
+					$("#search_search_modal.search").css('display','flex').fadeOut();
 				})
 				
 				$(function(){
 					$("btn_mo_search").on("click", function(){
-						$("modal").fadeIn(1000);
+						$("search_search_modal").fadeIn(1000);
 					});
 						$("search_btn_close").on("click", function(){
-						$("modal").fadeOut(1000);
+						$("search_search_modal").fadeOut(1000);
 					});
 				});
 				
