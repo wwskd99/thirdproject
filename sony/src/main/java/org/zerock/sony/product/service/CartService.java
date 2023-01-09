@@ -1,6 +1,7 @@
 package org.zerock.sony.product.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.zerock.sony.member.dto.MemberDTO;
@@ -14,6 +15,8 @@ import org.zerock.sony.product.entity.Product;
 
 public interface CartService {
 	void insert(CartDTO cartDTO);
+	List<CartDTO> cartDTO(String userid);
+	
 	
 	default Map<String, Object> dtoToEntity(CartDTO dto){
 		Map<String, Object> entityMap = new HashMap<>();
@@ -85,4 +88,7 @@ public interface CartService {
         		.build();
         return cartDTO;
     }
+    
+    
+    
 }

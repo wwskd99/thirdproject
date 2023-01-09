@@ -1,7 +1,8 @@
 package org.zerock.sony.product.service;
 
-import java.util.HashMap;
 import java.util.List;
+
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,7 @@ import org.zerock.sony.product.entity.Product;
 
 
 public interface ProductService {
+
 	void register(ProductDTO dto);
 	void updateProduct(ProductDTO dto);
 	PageResultDTO<ProductDTO, Object[]> getList(PageRequestDTO requestDTO);
@@ -63,6 +65,7 @@ public interface ProductService {
 				.id(product.getCategory().getId())
 				.name(product.getCategory().getName())
 				.build();
+
 		ProductDTO productDTO = ProductDTO.builder()
 				.code(product.getCode())
 				.name(product.getName())
@@ -70,8 +73,8 @@ public interface ProductService {
 				.description(product.getDescription())
 				.category(categoryDTO)
 				.stock(product.getStock())
-				.modDate(product.getModDate())
 				.regDate(product.getRegDate())
+				.modDate(product.getModDate())
 				.build();
 			List<ImageDTO> ImageDTOList = Images.stream().map(Image -> {
 				if(Image != null) {
@@ -85,4 +88,5 @@ public interface ProductService {
 			productDTO.setImageDTOList(ImageDTOList);
 		return productDTO;
 	}
+	
 }

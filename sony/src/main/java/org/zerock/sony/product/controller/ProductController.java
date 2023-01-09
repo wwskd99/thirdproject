@@ -1,5 +1,6 @@
 package org.zerock.sony.product.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -58,11 +59,7 @@ public class ProductController {
 		}
 	}
 		
-	@GetMapping("/cart")
-	public void cart() {
 
-	}
-	
 	@GetMapping("/list")
 	public void list(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, PageRequestDTO pageRequestDTO, Model model) {
 		MemberDTO memberDTO = MService.FindMember(authmemberDTO.getUserid(), authmemberDTO.isFromSocial());
@@ -107,16 +104,20 @@ public class ProductController {
 		model.addAttribute("product", PService.findOneProduct(code));
 	}
 	
+	@GetMapping("/cart")
+	 public void cart(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, CartDTO cartDTOList, Model model){
+        log.info("cartlist..." + cartDTOList);
+        cartService.cartDTO(authmemberDTO.getUserid());
+        model.addAttribute("cartList",cartService.cartDTO(authmemberDTO.getUserid()));
+       
+	}
+	
 	@PostMapping("/cart")
 	public void cartPush(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, long code, int amount, Model model) {
 		CartDTO cartDTO = new CartDTO();
 		cartDTO.setAmount(amount);
 		cartDTO.setBuyer(MService.FindMember(authmemberDTO.getUserid(), authmemberDTO.isFromSocial()));
 		cartDTO.setProduct(PService.findOneProduct(code));
-		cartService.insert(cartDTO);
-		
-		// 카트리스트 불러오고
-		// model.addAttribute("cartList",cartDTOList);
 	}
 	
 	@GetMapping("/search")

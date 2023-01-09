@@ -60,18 +60,7 @@
 			}
 		})
 	})
-	
-
-	
-	
-	
 </script>
-
-
-
-
-
-
 </head>
 <body>
 	<main>
@@ -103,16 +92,7 @@
 								id="cart_delete">
 						</div>
 					</div>
-
-
-
-
-
-
 					<div id="cart_center_center">
-
-
-
 						<div id="cart_center_sul">
 							<div id="cart_center_sul_check"></div>
 							<div id="cart_center_sul_img"></div>
@@ -129,33 +109,28 @@
 								<span>합계</span>
 							</div>
 							<div id="cart_center_sul_delete"></div>
-
 						</div>
-
 						<div id="cart_center_list">
-					
 							<div th:each="cart : ${cartList}">
-
-
 								<div id="cart_center_list_check">
 									<input id="rowcheck_button" type="checkbox" name="rowCheck"
-										value="${cart.cart_id}">
+										th:value="${cart.cart_id}">
 								</div>
-<!--  								<div id="cart_center_list_img">
+								<!--  								<div id="cart_center_list_img">
 									<img id="cartline_img" src="../${ca.pictureurl}">
 								</div>	-->
 								<div id="cart_center_list_name">
-									<span>${cart.name}</span>
+									<span>[[${cart}]]</span>
 								</div>
 								<div id="cart_center_list_price">
-									<span>${cart.price} 원</span>
+									<span>[[${cart.product.price}]] 원</span>
 								</div>
 								<div id="cart_center_list_amount">
-									<span>${cart.amount}</span>
+									<span>[[${cart.amount}]]</span>
 								</div>
 								<div id="cart_center_list_sum">
-								
-									<span>${cart.amount*cart.price} 원</span>
+
+									<span>[[${cart.amount*cart.product.price}]] 원</span>
 								</div>
 								<div id="cart_center_list_delete">
 									<input id="delete_button" type="button" value="삭제"
@@ -165,14 +140,10 @@
 							</div>
 						</div>
 					</div>
-
-
-
 					<div id="cart_center_bottom">
 						<input id="buybutton" type="button" value="주문하기"
 							onClick="buyProduct()">
 					</div>
-
 				</form>
 			</div>
 		</div>
