@@ -1,5 +1,7 @@
 package org.zerock.sony.product.controller;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -57,12 +59,7 @@ public class ProductController {
 			model.addAttribute("result",PService.sortNew(pageRequestDTO,category));
 		}
 	}
-		
-	@GetMapping("/cart")
-	public void cart(PageRequestDTO pageRequestDTO) {
 
-	}
-	
 	@GetMapping("/list")
 	public void list(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, PageRequestDTO pageRequestDTO, Model model) {
 		MemberDTO memberDTO = MService.FindMember(authmemberDTO.getUserid(), authmemberDTO.isFromSocial());
@@ -112,6 +109,12 @@ public class ProductController {
 		model.addAttribute("product", PService.findOneProduct(code));
 	}
 	
+	@GetMapping("/cart")
+	 public void cart(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, CartDTO cartDTOList, Model model){
+        log.info("cartlist..." + cartDTOList);
+        model.addAttribute("cartList",cartService.cartDTO(authmemberDTO.getUserid()));     
+	}
+	
 	@PostMapping("/cart")
 	public void cartPush(@AuthenticationPrincipal AuthMemberDTO authmemberDTO, long code, int amount, Model model) {
 		if(authmemberDTO == null) {
@@ -121,13 +124,33 @@ public class ProductController {
 			cartDTO.setBuyer(MService.FindMember(authmemberDTO.getUserid(), authmemberDTO.isFromSocial()));
 			cartDTO.setProduct(PService.findOneProduct(code));
 			cartService.insert(cartDTO);
+			model.addAttribute("cartList",cartService.cartDTO(authmemberDTO.getUserid()));
 		}
-		// 카트리스트 불러오고
-		// model.addAttribute("cartList",cartDTOList);
 	}
 	
 	@GetMapping("/search")
 	public void search(PageRequestDTO pageRequestDTO, Model model) {
 		model.addAttribute("result", PService.getListWithKeyword(pageRequestDTO));
+	}
+	
+	@GetMapping("/buy")
+	public void buy(int rowCheck[], Model model) {
+		List<CartDTO> buylist = new ArrayList<CartDTO>();
+		for(int i=0;i<rowCheck.length;i++) {
+			buylist.add(cartService.getbyId(rowCheck[i]));
+		}
+		log.info(buylist);
+		model.addAttribute("buy", buylist);
+		
+		int c = 0;
+		int d = 0;
+		for(int i = 0; i<buylist.size();i++) {
+			int a = buylist.get(i).getProduct().getPrice();
+			int b = buylist.get(i).getAmount();
+			c += a* b;
+			d += b;
+		}
+		model.addAttribute("sum", c);
+		model.addAttribute("buyAmount", d);
 	}
 }

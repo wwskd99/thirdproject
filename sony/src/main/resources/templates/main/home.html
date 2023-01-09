@@ -10,7 +10,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-
 main {
 	background: white;
 	display: block;
@@ -25,7 +24,7 @@ body {
 	display: block;
 	width: 100vw;
 	overflow: auto;
-	text-align: center; 
+	text-align: center;
 }
 
 .container {
@@ -38,18 +37,43 @@ body {
 	text-align: center;
 }
 
+.prev {
+	position: absolute;
+	top: 30%;
+	left: 0;
+}
+
+.next {
+	position: absolute;
+	top: 30%;
+	right: 0%;
+}
 </style>
 </head>
 <main>
-<div class="main">
-	<div id="container" class="container">
-		<video class="videoplayer" autoplay playsinline>
-			<source
-				src="https://image.sony.co.kr/newStore/video/220719_Linkbuds_39sec.mp4"
-				type="video/mp4">
-		</video>
+	<div class="main">
+		<div id="home_wrap" class="home_wrap">
+			<div class="home_list">
+				<video class="videoplayer" autoplay playsinline>
+					<source class="videolist"
+						src="https://image.sony.co.kr/newStore/video/220719_Linkbuds_39sec.mp4"
+						type="video/mp4">
+					<source class="videolist"
+						src="https://image.sony.co.kr/newStore/video/220428_a1_60sec.mp4"
+						type="video/mp4">
+				</video>
+			</div>
+			<div class="page-nav">
+				<a onclick="prev()" class="prev"> < </a> 
+				<a onclick="next()"	class="next"> > </a>
+			</div>
+		</div>
 	</div>
-</div>
+	<script type="text/javascript">
+		var slideWrapper = document.querySelector('.videoplayer');
+		var slides = document.querySelectorAll('.videolist');
+		var totalSlides = slides.length;
+	</script>
 </main>
 <th:block
 	th:replace="~{./fragments/footer::setContent(~{this::content})}">

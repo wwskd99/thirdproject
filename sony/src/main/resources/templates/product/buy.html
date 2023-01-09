@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../css/shopping.css">
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<style>
+#imgsize {
+	width: 200px;
+	height: 200px;
+}
+</style>
+<script>
+IMP.init('imp12536676');
+
+function requestPay() {
+	
+	var pga= '';
+	if(document.info.paymethod[1].checked){
+		pga = 'kakaopay.TC0ONETIME';
+	} else {
+		pga = 'html5_inicis.INIpayTest';
+	}
+	
+
+	
+	IMP.request_pay({
+		 pg: pga,
+		//pg: 'html5_inicis.INIpayTest',
+		 pay_method: 'card',
+		 merchant_uid: '123',
+		name: 'book',
+		amount: 1001, 
+		buyer_email: 'iamport@siot.do',          
+		 buyer_name: '구매자이름',          
+		 buyer_tel: '010-1234-5678',  
+	 }, function (rsp){
+		 if (rsp.success) {
+			 var msg = '결제가 완료되었습니다.';   
+			 msg += '고유ID : ' + rsp.imp_uid;      
+			 msg += '상점 거래ID : ' + rsp.merchant_uid;       
+			 msg += '결제 금액 : ' + rsp.paid_amount;         
+			 msg += '카드 승인번호 : ' + rsp.apply_num;
+			 
+			 paymentSubmit();
+			 
+	 }else {
+		 var msg = '결제에 실패하였습니다.';          
+		 msg += '에러내용 : ' + rsp.error_msg;
+		 alert(msg);
+		 paymentSubmit();
+	
+	 }
+	 });
+}
+		 
+function paymentSubmit(){
+	var value = $("form[name=info]").serialize() ;
+	
+	$.ajax({
+		url : "success.do",
+		type : "post",
+		data : value,
+		success : function (list){
+
+			window.location.href="paymentSuccess.jsp";
+		},
+			error : function() {
+			
+		}
+	});
+}
+		
+
+
+	
+</script>
+
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<main>
+	<div id="buy_wrap" align="center">
+		<div id="buy_top_wrap">
+				<h1 id = buy_text>주문·결제</h1>
+				<div id="buy_top_icon">
+					<div id="buy_top_icon_id1">
+						<img src="../images/buy_icon1.svg"><span>장바구니</span>
+					</div>
+					<div id="buy_top_icon_id2">
+						<img src="../images/buy_icon2.svg"><span>주문·결제</span>
+					</div>
+					<div id="buy_top_icon_id3">
+						<img src="../images/buy_icon3.svg"><span>주문 완료</span>
+					</div>
+				</div>
+			</div>
+	
+			<div id="cart_center_center">
+						
+
+
+							<div id="cart_center_sul">
+						
+								<div id = "buy_center_sul_img"></div>
+								<div id = "buy_center_sul_name"><span>제품</span></div>
+								<div id = "buy_center_sul_price"><span>가격</span></div>
+								<div id = "buy_center_sul_amount"><span>수량</span></div>
+								<div id = "buy_center_sul_sum"><span>합계</span></div>
+							
+
+							</div>
+
+							<div id = "cart_center_list">
+								<div th:each="bu : ${buy}">
+
+							
+								
+									<div id = "buy_center_list_img">
+										<div th:if="${bu.product.imageDTOList[0] != null}">
+											<img id="cartline_img" th:src="@{/display?fileName=}+${bu.product.imageDTOList[0].getImageURL()}"> 
+										</div>
+										<div th:if="${bu.product.imageDTOList[0] == null}">
+											사진 없음
+										</div>
+									</div>
+									<div id = "buy_center_list_name"><span>[[${bu.product.name}]]</span></div>
+									<div id = "buy_center_list_price"><span id = "buy_price">[[${bu.product.price}]] 원</span></div>
+									<div id = "buy_center_list_amount"><span id = "buy_amount">[[${bu.amount}]]</span></div>
+									
+								
+
+									<div id = "buy_center_list_sum"><span>[[${bu.product.price * bu.amount}]] 원</span></div>
+								
+						
+							
+								</div>
+							</div>
+							
+						</div>
+	
+	
+		<div id = "buy_form_wrap">
+		<form method="post" action="success.do" name="info" accept-charset="utf-8">
+			<div th:each="bu : ${buy}">
+				<input type="hidden" name="cart_id" th:value="${bu.cart_id}">
+			</div>
+			<div id = "buy_form_left">
+			<div id = "order_info">
+				<div id = order_info_top><span>주문자 정보</span></div>
+				<div id = "order_info_name1"><span>이름</span></div>
+				<div id = "order_info_name2"><input type="text" name="order_name"></div>
+				<div id = "order_info_name1"><span>이메일</span></div>
+				<div id = "order_info_name2"><input type="email" name="order_email"></div>
+				<div id = "order_info_name1"><span>휴대폰 번호</span></div>
+				<div id = "order_info_name2"><input type="tel" name="order_phone"></div>
+			</div>
+			
+			<div id = "del_info">
+				<div id = del_info_top><span>배송지 정보</span></div>
+				<div id = "del_info_name1"><span>수령인 이름</span></div>
+				<div id = "del_info_name2"><input type="text" name="del_name"></div>
+				<div id = "del_info_name1"><span>휴대폰 번호</span></div>
+				<div id = "del_info_name2"><input type="tel" name="del_phone"></div>
+				<div id = "del_info_name1"><span>주소</span></div>
+				<div id = "del_info_name2"><input type="text" name="del_address"></div>
+				<div id = "del_info_name1"><span>배송 요청 사항</span></div>
+				<div id = "del_info_name2"><input type="text" name="del_message"></div>
+				<div id = "del_info_name1"><span>배송일 선택</span></div>
+				<div id = "del_info_name2"><input type="date" name="del_date"></div>
+			</div>
+			
+			<div id = "pay_info">
+				<div id = pay_info_top><span>결제 방법</span></div>
+				<div id = "pay_info_name1"><span>결제 수단 선택</span></div>
+				<div id = "pay_info_name2">
+				<input id= "pay_info_card" type="radio" name="paymethod" value="card"><span>카드</span>
+				</div>
+				<div id = "pay_info_name3">
+				<input id= "pay_info_kakao" type="radio" name="paymethod" value="kakaopay"><span>카카오페이 간편결제</span>
+				</div>
+			</div>
+			</div>
+			<div id = "all_info">
+			
+			<div id = "all_info_1"><span id = "all_info_buy">결제 예정 금액</span></div>
+			<div id = "all_info_2"><span id = "all_info_sum">[[${sum}]] 원</span></div>
+			<div id = "all_info_3"><span id = "all_info_buy2">제품 금액</span></div>
+			<div id = all_info_6><span id = "all_info_sum2">[[${sum}]] 원</span></div>
+			<div id = "all_info_4"><span id = "all_info_amount">구매 수량 : [[${buyAmount}]] 개</span></div>
+			<div id = "all_info_5"><input id="buybutton" type="button" value="결제하기" onclick="requestPay()"></div>
+			</div>
+			
+			
+			
+			
+		
+		</form>
+		</div>
+	</div>
+</body>
+</html>

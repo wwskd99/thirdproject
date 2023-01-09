@@ -48,24 +48,21 @@ function cartCheck(){
     			data : value,
     			success : function (){
     			
-    				window.location.href="cart";
+    				window.location.href="/product/cart";
     			},
     			error : function() {
     			
     			}
-    		});
-    				
-    	}else{
+    		});  
     		
+    	}else{    		
     		$.ajax({
     			url : "cart",
     			type : "post",
     			data : value,
-    			success : function (){
-    				
+    			success : function (){	
     			},
-    			error : function() {
-    				
+    			error : function() {	
     			}
     		});   		
     	}
@@ -76,37 +73,41 @@ function cartCheck(){
 <body>
 	<main>
 		<div id="product_view_main">
-			<div id = "product_view_left">
- 				<div th:if="!${#lists.isEmpty(product.imageDTOList)}">
-					<img th:src="@{/display?fileName=}+${product.imageDTOList[0].getImageURL()}">
+			<div id="product_view_left">
+				<div th:if="!${#lists.isEmpty(product.imageDTOList)}">
+					<img
+						th:src="@{/display?fileName=}+${product.imageDTOList[0].getImageURL()}">
 				</div>
-				<div th:if="${#lists.isEmpty(product.imageDTOList)}">
-					사진 없음
-				</div>
+				<div th:if="${#lists.isEmpty(product.imageDTOList)}">사진 없음</div>
 			</div>
-			
-			<div id= "product_view_right">
-				<p id = "product_view_name">[[${product.name}]]</p>
-				<p id = "product_view_des">[[${product.description}]]</p>
-				<Strong id = "product_view_price">[[${product.price}]]</Strong>원
-			
-				<div id = "product_view_form_div">
-					<form id = "product_view_form" name = "cb" method="post">
-						<div id = "product_view_des2" name = "cb2">
-							<p id = "product_view_des2_name"> 제품 : [[${product.name}]] </p>
+
+			<div id="product_view_right">
+				<p id="product_view_name">[[${product.name}]]</p>
+				<p id="product_view_des">[[${product.description}]]</p>
+				<Strong id="product_view_price">[[${product.price}]]</Strong>원
+
+				<div id="product_view_form_div">
+					<form id="product_view_form" name="cb" method="post">
+						<div id="product_view_des2" name="cb2">
+							<p id="product_view_des2_name">제품 : [[${product.name}]]</p>
 							<div>
-								<input type="button" value="-1" onClick="amountMinus()" id = "amountbutton">							
-								<input id = "amounttext" type="text" name="amount" value="0">				
-								<input type="button" value="+1" onClick="amountPlus()" id = "amountbutton">
-								<br><br><br><br><br><br>
-								<span> 합계 : </span>
+								<input type="button" value="-1" onClick="amountMinus()"
+									id="amountbutton"> <input id="amounttext" type="text"
+									name="amount" value="0"> <input type="button"
+									value="+1" onClick="amountPlus()" id="amountbutton"> <br>
+								<br>
+								<br>
+								<br>
+								<br>
+								<br> <span> 합계 : </span>
 							</div>
 						</div>
-						<div id = "productview_cartbuy">
-							<input type="hidden" name="code" th:value="${product.code}"> 
-							<input id = "productview_cart" type="button" value="장바구니" onClick="cartCheck()">
-						</div>	
-					</form>	
+						<div id="productview_cartbuy">
+							<input type="hidden" name="code" th:value="${product.code}">
+							<input id="productview_cart" type="button" value="장바구니"
+								onClick="cartCheck()">
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>

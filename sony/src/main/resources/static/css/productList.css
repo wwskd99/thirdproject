@@ -497,7 +497,6 @@ justify-content: center;
 
 #cart_center_list div {
 	display: table-row;
-	float : left;
 	height : 100px;
 	margin:0 auto;
 	position : relative;
