@@ -23,4 +23,9 @@ public class PaymentServiceImpl implements PaymentService{
 		repository.save(payment);		
 	}
 
+	@Override
+	public void deleteCart(int delivery_num) {
+		repository.delete(null);
+	}
+
 }
