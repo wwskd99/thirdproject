@@ -172,6 +172,7 @@ public class ProductController {
 		log.warn(paydto);
 		payService.insert(paydto);
 		// payment_cart 지우고
+		cartService.deleteCartList(paydto.getCart(),paydto.getDelivery_num());
 		// cart 지움
 	}
 	@GetMapping("/payment")
@@ -180,9 +181,8 @@ public class ProductController {
 	}
 	
 	@GetMapping("/cartdelete")
-	public String cartdelte(int rowCheck) {
-		log.info("test: " + rowCheck);
-		// cart삭제(rowCheck)
+	public String cartdelte(long rowCheck) {
+		cartService.deleteCartById(rowCheck);
 		return "redirect:/product/cart";
 	}
 }

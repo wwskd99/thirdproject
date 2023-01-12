@@ -2,6 +2,7 @@ package org.zerock.sony.product.service;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -72,5 +73,22 @@ public class CartServiceImpl implements CartService {
 
 			return entityToDTO(cart, ImageList);
 		}
+	}
+
+	@Override
+	public void deleteCartList(List<CartDTO> cartList, int delivery_num) {
+		for(int i=0; i<cartList.size(); i++) {
+			log.info(cartList.get(i).getCart_id());
+			repository.deleteById(cartList.get(i).getCart_id());
+			repository.deletePayment_cart(cartList.get(i).getCart_id());
+		}
+		repository.deleteNull();
+		
+	}
+
+	@Override
+	public void deleteCartById(long rowCheck) {
+		repository.deleteById(rowCheck);
+		
 	}
 }

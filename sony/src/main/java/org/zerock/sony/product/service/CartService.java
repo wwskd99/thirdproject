@@ -20,6 +20,8 @@ public interface CartService {
 	void insert(CartDTO cartDTO);
 	List<CartDTO> cartDTO(String userid);
 	CartDTO getbyId(long cart_id);
+	void deleteCartList(List<CartDTO> cartList, int delivery_num);
+	void deleteCartById(long rowCheck);
 	
 	
 	default Map<String, Object> dtoToEntity(CartDTO dto){
@@ -115,7 +117,5 @@ public interface CartService {
 		productDTO.setImageDTOList(ImageDTOList);
         return cartDTO;
     }
-    
-    
     
 }

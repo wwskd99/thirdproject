@@ -20,6 +20,7 @@ import org.zerock.sony.product.entity.Product;
 
 public interface PaymentService {
 	void insert(PaymentDTO dto);
+	void deleteCart(int delivery_num);
 	
 	default Map<String, Object> dtoToEntity(PaymentDTO dto){
 		Map<String, Object> entityMap = new HashMap<>();
